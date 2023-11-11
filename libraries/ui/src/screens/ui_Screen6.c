@@ -15,8 +15,8 @@ lv_obj_set_style_bg_opa(ui_Screen6, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 ui_Label10 = lv_label_create(ui_Screen6);
 lv_obj_set_height( ui_Label10, lv_pct(22));
 lv_obj_set_width( ui_Label10, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_x( ui_Label10, 15 );
-lv_obj_set_y( ui_Label10, -156 );
+lv_obj_set_x( ui_Label10, -6 );
+lv_obj_set_y( ui_Label10, -109 );
 lv_obj_set_align( ui_Label10, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label10,"Mix external entropy");
 lv_obj_set_style_text_color(ui_Label10, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -24,22 +24,24 @@ lv_obj_set_style_text_opa(ui_Label10, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Label10, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Keyboard2 = lv_keyboard_create(ui_Screen6);
-lv_obj_set_width( ui_Keyboard2, 700);
-lv_obj_set_height( ui_Keyboard2, 283);
-lv_obj_set_x( ui_Keyboard2, 17 );
-lv_obj_set_y( ui_Keyboard2, 92 );
+lv_obj_set_width( ui_Keyboard2, 467);
+lv_obj_set_height( ui_Keyboard2, 158);
+lv_obj_set_x( ui_Keyboard2, -8 );
+lv_obj_set_y( ui_Keyboard2, 65 );
 lv_obj_set_align( ui_Keyboard2, LV_ALIGN_CENTER );
 
 ui_TextArea2 = lv_textarea_create(ui_Screen6);
-lv_obj_set_width( ui_TextArea2, 589);
+lv_obj_set_width( ui_TextArea2, 349);
 lv_obj_set_height( ui_TextArea2, 70);
-lv_obj_set_x( ui_TextArea2, -15 );
-lv_obj_set_y( ui_TextArea2, -103 );
+lv_obj_set_x( ui_TextArea2, -24 );
+lv_obj_set_y( ui_TextArea2, -64 );
 lv_obj_set_align( ui_TextArea2, LV_ALIGN_CENTER );
 lv_textarea_set_placeholder_text(ui_TextArea2,"Placeholder...");
 
 
 
+lv_keyboard_set_textarea(ui_Keyboard2,ui_TextArea2);
+lv_obj_add_event_cb(ui_Keyboard2, ui_event_Keyboard2, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_TextArea2, ui_event_TextArea2, LV_EVENT_ALL, NULL);
 
 }
