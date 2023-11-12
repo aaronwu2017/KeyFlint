@@ -1,9 +1,12 @@
 #include<Arduino.h>
 #include <lvgl.h>
-//#include <WiFi.h>
+#define SHA256_LEN 32
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
 #include "FT6236.h"
+extern "C" {
+#include "random.h"
+}
 #include <ui.h>
 
 
@@ -20,7 +23,8 @@ const int i2c_touch_addr = TOUCH_I2C_ADD;
 #define SDA_FT6236 38
 #define SCL_FT6236 39
 //FT6236 ts = FT6236();
-
+  
+    String seedPhrase[24];
 class LGFX : public lgfx::LGFX_Device
 {
     lgfx::Panel_ILI9488 _panel_instance;
@@ -71,7 +75,7 @@ class LGFX : public lgfx::LGFX_Device
         cfg.offset_rotation = 2;
         cfg.dummy_read_pixel = 8;
         cfg.dummy_read_bits = 1;
-        cfg.readable = true;
+        cfg.readable = true; 
         cfg.invert = false;
         cfg.rgb_order = false;
         cfg.dlen_16bit = true;
@@ -202,38 +206,76 @@ void loop()
 
 void generateSeed(lv_event_t * e)
 {
+  uint8_t local_entropy_state[SHA256_LEN];
+random_start_collecting(local_entropy_state, SHA256_LEN);
+for (int i = 0; i < SHA256_LEN; i++) {
+        Serial.print("entropy_state[");
+        Serial.print(i);
+        Serial.print("] = ");
+        Serial.println(local_entropy_state[i], HEX); // 以十六进制格式打印
+    }
+
  String entropy1 = "24";
 // // generating 12 words (first parameter, 24 by default)
- String seedPhrase = generateMnemonic(entropy1);
+ String tempSeedPhrase = generateMnemonic(24,local_entropy_state, 256);
 
- Serial.println(seedPhrase);
+ Serial.println(tempSeedPhrase);
 // HDPrivateKey root(phrase1, "");
-lv_label_set_text_static( ui_Label28, "aaaaaaText");
-// std::string options = "First\nSecond\nThird";
- String options = "";
-    for (int i = 0; i < seedPhrase.length(); i++) {
-         if (seedPhrase[i] == ' ') { // Check if the current character is a space
-            options += '\n'; // Add a newline character instead of space
-        } else {
-            options += seedPhrase[i]; // Add the current character
-        }
+// lv_label_set_text_static( ui_Label28, "aaaaaaText");
+ splitString(tempSeedPhrase);
+String options = "";
+int wordNumber = 1; // Initialize word number counter
+
+for (int i = 0; i < tempSeedPhrase.length(); i++) {
+    if (i == 0 || tempSeedPhrase[i - 1] == ' ') { // Check for the start of a new word
+        options += String(wordNumber) + ". "; // Append the word number and a period
+        wordNumber++; // Increment the word number
     }
+
+    if (tempSeedPhrase[i] == ' ') {
+        options += '\n'; // Add a newline character instead of space
+    } else {
+        options += tempSeedPhrase[i]; // Add the current character
+    }
+}
+
 
   const char* options_cStr = options.c_str();
 lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
+//lv_roller_set_selected(ui_Roller2,1,LV_ANIM_OFF);
 // Serial.println(root);
+   String labelStr = seedPhrase[0];
+lv_label_set_text(ui_Label28, labelStr.c_str());
 }
 
 void getSelectedSeedWord(lv_event_t * e){
 int wordIndex = lv_roller_get_selected(ui_Roller2);
-Serial.println(wordIndex);
-    
+
     // Convert integer to string
     String wordIndexStr = String(wordIndex);
     
     // Concatenate with your desired text
-    String labelStr = "aaaaaaText" + wordIndexStr;
+    String labelStr = seedPhrase[wordIndex];
     
     // Set the label's text (use a non-static function)
     lv_label_set_text(ui_Label28, labelStr.c_str());
+}
+
+
+void splitString(String str) {
+    int wordIndex = 0;
+    int startPos = 0;
+
+    for (int i = 0; i < str.length(); i++) {
+        if (str.charAt(i) == ' ' || i == str.length() - 1) {
+            // Add the last word if we're at the end of the string
+            String word = (i == str.length() - 1) ? str.substring(startPos) : str.substring(startPos, i);
+            seedPhrase[wordIndex++] = word;
+            startPos = i + 1; // Set start position for next word
+
+            if (wordIndex >= 24) {
+                break; // Avoid going beyond the array size
+            }
+        }
+    }
 }

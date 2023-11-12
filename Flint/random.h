@@ -1,4 +1,9 @@
+#ifndef RANDOM_UTILS_H
+#define RANDOM_UTILS_H
 
+#include <stdint.h>
+#include <stddef.h>
 
-void random_start_collecting(void);
-// You may declare other functions here if they're part of the interface.
+void random_start_collecting(uint8_t* outputArray, size_t size);
+
+#endif // RANDOM_UTILS_H
