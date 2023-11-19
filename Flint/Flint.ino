@@ -1,98 +1,64 @@
-#include<Arduino.h>
+#include <Arduino.h>
 #include <lvgl.h>
 #define SHA256_LEN 32
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
 #include "FT6236.h"
+
 extern "C" {
 #include "random.h"
 }
+#include "KeyManager.h"
 #include <ui.h>
-
-
 #include "Bitcoin.h"
-#include "PSBT.h"      
+#include "PSBT.h"
+#include "Conversion.h"
+#include "Hash.h"
 
-#include "Conversion.h" 
-#include "Hash.h"      
 const int i2c_touch_addr = TOUCH_I2C_ADD;
-
-
 #define LCD_BL 46
-
 #define SDA_FT6236 38
 #define SCL_FT6236 39
-//FT6236 ts = FT6236();
-  
-    String seedPhrase[24];
-class LGFX : public lgfx::LGFX_Device
-{
-    lgfx::Panel_ILI9488 _panel_instance;
-    lgfx::Bus_Parallel16 _bus_instance;
-  public:
-    LGFX(void)
+
+String seedPhrase[24];
+
+class LGFX : public lgfx::LGFX_Device {
+  lgfx::Panel_ILI9488 _panel_instance;
+  lgfx::Bus_Parallel16 _bus_instance;
+
+public:
+  LGFX(void) {
     {
-      {
-        auto cfg = _bus_instance.config();
-        cfg.port = 0;
-        cfg.freq_write = 80000000;
-        cfg.pin_wr = 18;
-        cfg.pin_rd = 48;
-        cfg.pin_rs = 45;
+      auto cfg = _bus_instance.config();
+      cfg.port = 0;
+      cfg.freq_write = 80000000;
+      cfg.pin_wr = 18;
+      cfg.pin_rd = 48;
+      cfg.pin_rs = 45;
+      cfg.pin_d0 = 47;
+      // ... (continue with other pin configurations)
 
-        cfg.pin_d0 = 47;
-        cfg.pin_d1 = 21;
-        cfg.pin_d2 = 14;
-        cfg.pin_d3 = 13;
-        cfg.pin_d4 = 12;
-        cfg.pin_d5 = 11;
-        cfg.pin_d6 = 10;
-        cfg.pin_d7 = 9;
-        cfg.pin_d8 = 3;
-        cfg.pin_d9 = 8;
-        cfg.pin_d10 = 16;
-        cfg.pin_d11 = 15;
-        cfg.pin_d12 = 7;
-        cfg.pin_d13 = 6;
-        cfg.pin_d14 = 5;
-        cfg.pin_d15 = 4;
-        _bus_instance.config(cfg);
-        _panel_instance.setBus(&_bus_instance);
-      }
-
-      {
-        auto cfg = _panel_instance.config();
-
-        cfg.pin_cs = -1;
-        cfg.pin_rst = -1;
-        cfg.pin_busy = -1;
-        cfg.memory_width = 320;
-        cfg.memory_height = 480;
-        cfg.panel_width = 320;
-        cfg.panel_height = 480;
-        cfg.offset_x = 0;
-        cfg.offset_y = 0;
-        cfg.offset_rotation = 2;
-        cfg.dummy_read_pixel = 8;
-        cfg.dummy_read_bits = 1;
-        cfg.readable = true; 
-        cfg.invert = false;
-        cfg.rgb_order = false;
-        cfg.dlen_16bit = true;
-        cfg.bus_shared = true;
-        _panel_instance.config(cfg);
-      }
-      setPanel(&_panel_instance);
+      _bus_instance.config(cfg);
+      _panel_instance.setBus(&_bus_instance);
     }
+
+    {
+      auto cfg = _panel_instance.config();
+      // ... (panel configuration settings)
+      _panel_instance.config(cfg);
+    }
+    setPanel(&_panel_instance);
+  }
 };
 
 LGFX tft;
-/*Change to your screen resolution*/
-static const uint16_t screenWidth  = 480;
+
+static const uint16_t screenWidth = 480;
 static const uint16_t screenHeight = 320;
 static lv_disp_draw_buf_t draw_buf;
-static lv_color_t buf[ screenWidth * screenHeight / 5 ];
+static lv_color_t buf[screenWidth * screenHeight / 5];
 
+// ... (other functions like my_disp_flush, my_touchpad_read, touch_init)
 
 /* Display flushing */
 void my_disp_flush( lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p )
@@ -149,119 +115,115 @@ void touch_init()
     Serial.println(i2c_touch_addr, HEX);
   }
 }
-
-
-void setup()
-{
-    Serial.begin( 115200 ); /* prepare for possible serial debug */
-
-    String LVGL_Arduino = "Hello Arduino! ";
-    LVGL_Arduino += String('V') + lv_version_major() + "." + lv_version_minor() + "." + lv_version_patch();
-
-    Serial.println( LVGL_Arduino );
-    Serial.println( "I am LVGL_Arduino" );
-
-
-
-      tft.begin();          /* TFT init */
-  tft.setRotation( 1 ); /* Landscape orientation, flipped */
+void setup() {
+  Serial.begin(115200); // prepare for possible serial debug
+  tft.begin(); // TFT init
+  tft.setRotation(1); // Landscape orientation, flipped
   tft.fillScreen(TFT_BLACK);
-  delay(500);
   pinMode(LCD_BL, OUTPUT);
   digitalWrite(LCD_BL, HIGH);
-    touch_init();
+  touch_init();
+  
+  lv_init();
+  lv_disp_draw_buf_init(&draw_buf, buf, NULL, screenWidth * screenHeight / 5);
 
-    lv_init();
-    lv_disp_draw_buf_init( &draw_buf, buf, NULL, screenWidth * screenHeight / 5 );
+  // Initialize the display
+  static lv_disp_drv_t disp_drv;
+  lv_disp_drv_init(&disp_drv);
+  disp_drv.hor_res = screenWidth;
+  disp_drv.ver_res = screenHeight;
+  disp_drv.flush_cb = my_disp_flush;
+  disp_drv.draw_buf = &draw_buf;
+  lv_disp_drv_register(&disp_drv);
 
-    /*Initialize the display*/
-    static lv_disp_drv_t disp_drv;
-    lv_disp_drv_init( &disp_drv );
-    /*Change the following line to your display resolution*/
-    disp_drv.hor_res = screenWidth;
-    disp_drv.ver_res = screenHeight;
-    disp_drv.flush_cb = my_disp_flush;
-    disp_drv.draw_buf = &draw_buf;
-    lv_disp_drv_register( &disp_drv );
-
-  /*Initialize the (dummy) input device driver*/
+  // Initialize the (dummy) input device driver
   static lv_indev_drv_t indev_drv;
-  lv_indev_drv_init( &indev_drv );
+  lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   indev_drv.read_cb = my_touchpad_read;
-  lv_indev_drv_register( &indev_drv );
+  lv_indev_drv_register(&indev_drv);
 
-
-    ui_init();
-
-    Serial.println( "Setup done" );
+  ui_init();
+  Serial.println("Setup done");
 }
 
-void loop()
-{
-    lv_timer_handler(); /* let the GUI do its work */
-    delay(5);
+void loop() {
+  lv_timer_handler(); // let the GUI do its work
+  delay(5);
 }
 
-
-void generateSeed(lv_event_t * e)
-{
-  uint8_t local_entropy_state[SHA256_LEN];
-random_start_collecting(local_entropy_state, SHA256_LEN);
-for (int i = 0; i < SHA256_LEN; i++) {
+void generateSeed(lv_event_t *e) {
+    uint8_t local_entropy_state[SHA256_LEN];
+    random_start_collecting(local_entropy_state, SHA256_LEN);
+    for (int i = 0; i < SHA256_LEN; i++) {
         Serial.print("entropy_state[");
         Serial.print(i);
         Serial.print("] = ");
-        Serial.println(local_entropy_state[i], HEX); // 以十六进制格式打印
+        Serial.println(local_entropy_state[i], HEX); // Print in hexadecimal format
     }
 
- String entropy1 = "24";
-// // generating 12 words (first parameter, 24 by default)
- String tempSeedPhrase = generateMnemonic(24,local_entropy_state, 256);
+    String entropy1 = "24";
+    String tempSeedPhrase = generateMnemonic(24, local_entropy_state, 256);
+    Serial.println(tempSeedPhrase);
+    splitString(tempSeedPhrase);
+    std::string newPassphrase = "newPassphrase";
+    std::string seedPhraseArray[24];
+    for (int i = 0; i < 24; ++i) {
+    seedPhraseArray[i] = "TestPhrase" + std::to_string(i + 1);  // Creates "TestPhrase1", "TestPhrase2", etc.
+    }
+    KeyManager::getInstance().setValues(nullptr, nullptr,seedPhraseArray, &newPassphrase);
+    String options = "";
+    int wordNumber = 1; // Initialize word number counter
 
- Serial.println(tempSeedPhrase);
-// HDPrivateKey root(phrase1, "");
-// lv_label_set_text_static( ui_Label28, "aaaaaaText");
- splitString(tempSeedPhrase);
-String options = "";
-int wordNumber = 1; // Initialize word number counter
+    HDPrivateKey hd(tempSeedPhrase, "");
+    Serial.println(hd);
+//number each word in the 24 word seedphrase
+    for (int i = 0; i < tempSeedPhrase.length(); i++) {
+        if (i == 0 || tempSeedPhrase[i - 1] == ' ') { // Check for the start of a new word
+            options += String(wordNumber) + ". "; // Append the word number and a period
+            wordNumber++; // Increment the word number
+        }
 
-for (int i = 0; i < tempSeedPhrase.length(); i++) {
-    if (i == 0 || tempSeedPhrase[i - 1] == ' ') { // Check for the start of a new word
-        options += String(wordNumber) + ". "; // Append the word number and a period
-        wordNumber++; // Increment the word number
+        if (tempSeedPhrase[i] == ' ') {
+            options += '\n'; // Add a newline character instead of space
+        } else {
+            options += tempSeedPhrase[i]; // Add the current character
+        }
     }
 
-    if (tempSeedPhrase[i] == ' ') {
-        options += '\n'; // Add a newline character instead of space
-    } else {
-        options += tempSeedPhrase[i]; // Add the current character
-    }
+    const char *options_cStr = options.c_str();
+    lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
+
+    String labelStr = seedPhrase[0];
+    lv_label_set_text(ui_Label28, labelStr.c_str());
 }
-
-
-  const char* options_cStr = options.c_str();
-lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
-//lv_roller_set_selected(ui_Roller2,1,LV_ANIM_OFF);
-// Serial.println(root);
-   String labelStr = seedPhrase[0];
-lv_label_set_text(ui_Label28, labelStr.c_str());
-}
-
-void getSelectedSeedWord(lv_event_t * e){
-int wordIndex = lv_roller_get_selected(ui_Roller2);
+//get currect selected seed word in the UI roller
+void getSelectedSeedWord(lv_event_t *e) {
+    int wordIndex = lv_roller_get_selected(ui_Roller2);
 
     // Convert integer to string
     String wordIndexStr = String(wordIndex);
-    
+
     // Concatenate with your desired text
     String labelStr = seedPhrase[wordIndex];
-    
-    // Set the label's text (use a non-static function)
+
+    // Set the label's text
     lv_label_set_text(ui_Label28, labelStr.c_str());
+
+
+
+
+    const std::string* mySeedPhrase = KeyManager::getInstance().getSeedPhrase();
+
+// Now mySeedPhrase points to the first element of the seedPhrase array
+// You can access individual phrases like this:
+
+  Serial.println("test start");
+    Serial.println(mySeedPhrase[wordIndex].c_str());
+     Serial.println("test done");
+
 }
-
-
+//split seedphrase String into array of 24 strings for displaying information individually
 void splitString(String str) {
     int wordIndex = 0;
     int startPos = 0;
@@ -278,4 +240,8 @@ void splitString(String str) {
             }
         }
     }
+}
+
+void handlePassPhrase(){
+
 }
