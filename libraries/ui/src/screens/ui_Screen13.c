@@ -23,8 +23,8 @@ lv_obj_set_align( ui_ImgButton4, LV_ALIGN_CENTER );
 ui_Label29 = lv_label_create(ui_Screen13);
 lv_obj_set_width( ui_Label29, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label29, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label29, -4 );
-lv_obj_set_y( ui_Label29, 5 );
+lv_obj_set_x( ui_Label29, 10 );
+lv_obj_set_y( ui_Label29, -54 );
 lv_obj_set_align( ui_Label29, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label29,"to\nchange\nbtc\nfee");
 lv_obj_add_state( ui_Label29, LV_STATE_PRESSED );     /// States
@@ -56,7 +56,7 @@ lv_obj_set_height( ui_Label32, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Label32, 0 );
 lv_obj_set_y( ui_Label32, -1 );
 lv_obj_set_align( ui_Label32, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label32,"Sign");
+lv_label_set_text(ui_Label32,"Sign and export");
 lv_obj_add_state( ui_Label32, LV_STATE_PRESSED );     /// States
 lv_obj_set_style_text_color(ui_Label32, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_Label32, 255, LV_PART_MAIN| LV_STATE_DEFAULT);

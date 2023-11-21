@@ -25,9 +25,9 @@ lv_obj_set_style_text_font(ui_Label12, &lv_font_montserrat_30, LV_PART_MAIN| LV_
 
 ui_Keyboard1 = lv_keyboard_create(ui_Screen7);
 lv_obj_set_width( ui_Keyboard1, 458);
-lv_obj_set_height( ui_Keyboard1, 175);
+lv_obj_set_height( ui_Keyboard1, 198);
 lv_obj_set_x( ui_Keyboard1, 5 );
-lv_obj_set_y( ui_Keyboard1, 65 );
+lv_obj_set_y( ui_Keyboard1, 62 );
 lv_obj_set_align( ui_Keyboard1, LV_ALIGN_CENTER );
 
 ui_TextArea1 = lv_textarea_create(ui_Screen7);

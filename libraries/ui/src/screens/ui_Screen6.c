@@ -25,16 +25,16 @@ lv_obj_set_style_text_font(ui_Label10, &lv_font_montserrat_30, LV_PART_MAIN| LV_
 
 ui_Keyboard2 = lv_keyboard_create(ui_Screen6);
 lv_obj_set_width( ui_Keyboard2, 467);
-lv_obj_set_height( ui_Keyboard2, 158);
+lv_obj_set_height( ui_Keyboard2, 194);
 lv_obj_set_x( ui_Keyboard2, -8 );
 lv_obj_set_y( ui_Keyboard2, 65 );
 lv_obj_set_align( ui_Keyboard2, LV_ALIGN_CENTER );
 
 ui_TextArea2 = lv_textarea_create(ui_Screen6);
-lv_obj_set_width( ui_TextArea2, 349);
+lv_obj_set_width( ui_TextArea2, 384);
 lv_obj_set_height( ui_TextArea2, 70);
-lv_obj_set_x( ui_TextArea2, -24 );
-lv_obj_set_y( ui_TextArea2, -64 );
+lv_obj_set_x( ui_TextArea2, -9 );
+lv_obj_set_y( ui_TextArea2, -70 );
 lv_obj_set_align( ui_TextArea2, LV_ALIGN_CENTER );
 lv_textarea_set_placeholder_text(ui_TextArea2,"Placeholder...");
 

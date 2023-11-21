@@ -25,42 +25,35 @@ lv_obj_set_style_text_opa(ui_Label3, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Label3, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Roller2 = lv_roller_create(ui_Screen2);
-lv_roller_set_options( ui_Roller2, "1.word\n2.word\n3.word\n4.word\n5.word\n6.word\n7.word\n8.word\n9.word\n10.word\n12.word\n13.word\n14.word\n15.word\n16.word\n17.word\n18.word\n19.word\n20.word\n21.word", LV_ROLLER_MODE_NORMAL );
 lv_obj_set_height( ui_Roller2, 189);
 lv_obj_set_width( ui_Roller2, lv_pct(29));
 lv_obj_set_x( ui_Roller2, -154 );
 lv_obj_set_y( ui_Roller2, -17 );
 lv_obj_set_align( ui_Roller2, LV_ALIGN_CENTER );
+lv_obj_set_style_text_font(ui_Roller2, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel3 = lv_obj_create(ui_Screen2);
 lv_obj_set_width( ui_Panel3, 300);
-lv_obj_set_height( ui_Panel3, 158);
+lv_obj_set_height( ui_Panel3, 185);
 lv_obj_set_x( ui_Panel3, 92 );
-lv_obj_set_y( ui_Panel3, -28 );
+lv_obj_set_y( ui_Panel3, -17 );
 lv_obj_set_align( ui_Panel3, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_Label13 = lv_label_create(ui_Panel3);
 lv_obj_set_width( ui_Label13, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label13, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label13, -11 );
-lv_obj_set_y( ui_Label13, -31 );
+lv_obj_set_x( ui_Label13, 0 );
+lv_obj_set_y( ui_Label13, 8 );
 lv_obj_set_align( ui_Label13, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label13,"Decimal: 1932\nBinary: 10010110010");
 lv_obj_set_style_text_font(ui_Label13, &lv_font_montserrat_28, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Label28 = lv_label_create(ui_Panel3);
-lv_obj_set_width( ui_Label28, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_Label28, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label28, -64 );
-lv_obj_set_y( ui_Label28, 48 );
-lv_obj_set_align( ui_Label28, LV_ALIGN_CENTER );
-
 ui_Button7 = lv_btn_create(ui_Screen2);
 lv_obj_set_height( ui_Button7, 66);
 lv_obj_set_width( ui_Button7, lv_pct(76));
-lv_obj_set_x( ui_Button7, 15 );
-lv_obj_set_y( ui_Button7, 121 );
+lv_obj_set_x( ui_Button7, 14 );
+lv_obj_set_y( ui_Button7, 120 );
 lv_obj_set_align( ui_Button7, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_Button7, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_Button7, LV_OBJ_FLAG_SCROLLABLE );    /// Flags

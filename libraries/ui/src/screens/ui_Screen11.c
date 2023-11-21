@@ -27,7 +27,7 @@ lv_obj_set_style_border_color(ui_Button17, lv_color_hex(0xFFFFFF), LV_PART_MAIN 
 lv_obj_set_style_border_opa(ui_Button17, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_outline_color(ui_Button17, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_outline_opa(ui_Button17, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_shadow_color(ui_Button17, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_shadow_color(ui_Button17, lv_color_hex(0xF1F1F1), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_shadow_opa(ui_Button17, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Label30 = lv_label_create(ui_Button17);
@@ -43,18 +43,18 @@ lv_obj_set_style_text_opa(ui_Label30, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 ui_TextArea3 = lv_textarea_create(ui_Screen11);
 lv_obj_set_width( ui_TextArea3, 420);
 lv_obj_set_height( ui_TextArea3, LV_SIZE_CONTENT);   /// 112
-lv_obj_set_x( ui_TextArea3, -2 );
-lv_obj_set_y( ui_TextArea3, -40 );
+lv_obj_set_x( ui_TextArea3, 1 );
+lv_obj_set_y( ui_TextArea3, -85 );
 lv_obj_set_align( ui_TextArea3, LV_ALIGN_CENTER );
 lv_textarea_set_text(ui_TextArea3,"Placeholder...");
 
 
 
 ui_Keyboard3 = lv_keyboard_create(ui_Screen11);
-lv_obj_set_width( ui_Keyboard3, 300);
-lv_obj_set_height( ui_Keyboard3, 120);
-lv_obj_set_x( ui_Keyboard3, -31 );
-lv_obj_set_y( ui_Keyboard3, 92 );
+lv_obj_set_width( ui_Keyboard3, 475);
+lv_obj_set_height( ui_Keyboard3, 214);
+lv_obj_set_x( ui_Keyboard3, -4 );
+lv_obj_set_y( ui_Keyboard3, 48 );
 lv_obj_set_align( ui_Keyboard3, LV_ALIGN_CENTER );
 
 lv_obj_add_event_cb(ui_Button17, ui_event_Button17, LV_EVENT_ALL, NULL);

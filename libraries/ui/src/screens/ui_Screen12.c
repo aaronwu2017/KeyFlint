@@ -20,29 +20,11 @@ lv_obj_set_x( ui_ImgButton3, 189 );
 lv_obj_set_y( ui_ImgButton3, -116 );
 lv_obj_set_align( ui_ImgButton3, LV_ALIGN_CENTER );
 
-ui_Button18 = lv_btn_create(ui_Screen12);
-lv_obj_set_height( ui_Button18, 65);
-lv_obj_set_width( ui_Button18, lv_pct(82));
-lv_obj_set_x( ui_Button18, -9 );
-lv_obj_set_y( ui_Button18, -40 );
-lv_obj_set_align( ui_Button18, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Button18, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-lv_obj_clear_flag( ui_Button18, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_bg_color(ui_Button18, lv_color_hex(0xAD9999), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Button18, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_radius(ui_Button18, 45, LV_PART_MAIN| LV_STATE_PRESSED);
-lv_obj_set_style_bg_color(ui_Button18, lv_color_hex(0x6C6C6C), LV_PART_MAIN | LV_STATE_PRESSED );
-lv_obj_set_style_bg_opa(ui_Button18, 255, LV_PART_MAIN| LV_STATE_PRESSED);
-lv_obj_set_style_bg_grad_color(ui_Button18, lv_color_hex(0x6D6D6D), LV_PART_MAIN | LV_STATE_PRESSED );
-lv_obj_set_style_bg_main_stop(ui_Button18, 0, LV_PART_MAIN| LV_STATE_PRESSED);
-lv_obj_set_style_bg_grad_stop(ui_Button18, 255, LV_PART_MAIN| LV_STATE_PRESSED);
-lv_obj_set_style_bg_grad_dir(ui_Button18, LV_GRAD_DIR_VER, LV_PART_MAIN| LV_STATE_PRESSED);
-
-ui_Label31 = lv_label_create(ui_Button18);
+ui_Label31 = lv_label_create(ui_Screen12);
 lv_obj_set_width( ui_Label31, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label31, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Label31, -4 );
-lv_obj_set_y( ui_Label31, 0 );
+lv_obj_set_y( ui_Label31, -69 );
 lv_obj_set_align( ui_Label31, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label31,"Scan Unsigned Transaction ");
 lv_obj_add_state( ui_Label31, LV_STATE_PRESSED );     /// States
@@ -51,6 +33,5 @@ lv_obj_set_style_text_opa(ui_Label31, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Label31, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 lv_obj_add_event_cb(ui_ImgButton3, ui_event_ImgButton3, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_Button18, ui_event_Button18, LV_EVENT_ALL, NULL);
 
 }

@@ -29,23 +29,54 @@ class LGFX : public lgfx::LGFX_Device {
 public:
   LGFX(void) {
     {
-      auto cfg = _bus_instance.config();
-      cfg.port = 0;
-      cfg.freq_write = 80000000;
-      cfg.pin_wr = 18;
-      cfg.pin_rd = 48;
-      cfg.pin_rs = 45;
-      cfg.pin_d0 = 47;
-      // ... (continue with other pin configurations)
+    auto cfg = _bus_instance.config();
+        cfg.port = 0;
+        cfg.freq_write = 80000000;
+        cfg.pin_wr = 18;
+        cfg.pin_rd = 48;
+        cfg.pin_rs = 45;
 
-      _bus_instance.config(cfg);
-      _panel_instance.setBus(&_bus_instance);
+        cfg.pin_d0 = 47;
+        cfg.pin_d1 = 21;
+        cfg.pin_d2 = 14;
+        cfg.pin_d3 = 13;
+        cfg.pin_d4 = 12;
+        cfg.pin_d5 = 11;
+        cfg.pin_d6 = 10;
+        cfg.pin_d7 = 9;
+        cfg.pin_d8 = 3;
+        cfg.pin_d9 = 8;
+        cfg.pin_d10 = 16;
+        cfg.pin_d11 = 15;
+        cfg.pin_d12 = 7;
+        cfg.pin_d13 = 6;
+        cfg.pin_d14 = 5;
+        cfg.pin_d15 = 4;
+        _bus_instance.config(cfg);
+        _panel_instance.setBus(&_bus_instance);
     }
 
     {
-      auto cfg = _panel_instance.config();
-      // ... (panel configuration settings)
-      _panel_instance.config(cfg);
+        auto cfg = _panel_instance.config();
+
+        cfg.pin_cs = -1;
+        cfg.pin_rst = -1;
+        cfg.pin_busy = -1;
+        cfg.memory_width = 320;
+        cfg.memory_height = 480;
+        cfg.panel_width = 320;
+        cfg.panel_height = 480;
+        cfg.offset_x = 0;
+        cfg.offset_y = 0;
+        cfg.offset_rotation = 2;
+        cfg.dummy_read_pixel = 8;
+        cfg.dummy_read_bits = 1;
+        cfg.readable = true; 
+        cfg.invert = false;
+        cfg.rgb_order = false;
+        cfg.dlen_16bit = true;
+        cfg.bus_shared = true;
+        _panel_instance.config(cfg);
     }
     setPanel(&_panel_instance);
   }
@@ -171,7 +202,9 @@ void generateSeed(lv_event_t *e) {
     for (int i = 0; i < 24; ++i) {
     seedPhraseArray[i] = "TestPhrase" + std::to_string(i + 1);  // Creates "TestPhrase1", "TestPhrase2", etc.
     }
+       Serial.println("finish initialize test array");
     KeyManager::getInstance().setValues(nullptr, nullptr,seedPhraseArray, &newPassphrase);
+       Serial.println("finish setvalue KeyManager");
     String options = "";
     int wordNumber = 1; // Initialize word number counter
 
@@ -195,7 +228,7 @@ void generateSeed(lv_event_t *e) {
     lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
 
     String labelStr = seedPhrase[0];
-    lv_label_set_text(ui_Label28, labelStr.c_str());
+   // lv_label_set_text(ui_Label28, labelStr.c_str());
 }
 //get currect selected seed word in the UI roller
 void getSelectedSeedWord(lv_event_t *e) {
@@ -208,7 +241,7 @@ void getSelectedSeedWord(lv_event_t *e) {
     String labelStr = seedPhrase[wordIndex];
 
     // Set the label's text
-    lv_label_set_text(ui_Label28, labelStr.c_str());
+    // lv_label_set_text(ui_Label28, labelStr.c_str());
 
 
 
