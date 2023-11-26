@@ -14,7 +14,21 @@ extern "C" {
 #include "PSBT.h"
 #include "Conversion.h"
 #include "Hash.h"
+//----ur
 
+#include "crc32.h"
+#include "xoshiro256.hpp"
+#include "utils.hpp"
+#include "random-sampler.hpp"
+#include "fountain-encoder.hpp"
+#include "fountain-utils.hpp"
+#include "test-utils.hpp"
+#include <vector>
+#include <array>
+#include <string>
+#include <assert.h>
+#include <algorithm> 
+//---
 const int i2c_touch_addr = TOUCH_I2C_ADD;
 #define LCD_BL 46
 #define SDA_FT6236 38
@@ -275,6 +289,16 @@ void splitString(String str) {
     }
 }
 
-void handlePassPhrase(){
+// void handlePassPhrase(){
 
-}
+// }
+
+// void signAndExport(){
+// Encoder en = new 
+//   auto ur = make_message_ur(256);
+//     auto encoder = ur::UREncoder(ur, 30);
+//     ur::StringVector parts;
+//     for(int i = 0; i < 20; i++) {
+//         parts.push_back(encoder.next_part());
+//     }    
+// }
