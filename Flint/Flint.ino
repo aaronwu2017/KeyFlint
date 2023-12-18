@@ -190,6 +190,7 @@ void setup() {
 
   ui_init();
   Serial.println("Setup done");
+
 }
 
 void loop() {
@@ -222,7 +223,10 @@ void generateSeed(lv_event_t *e) {
     String options = "";
     int wordNumber = 1; // Initialize word number counter
 
-    HDPrivateKey hd(tempSeedPhrase, "");
+   // HDPrivateKey hd(tempSeedPhrase, "");
+   
+    String testTempSeedPhrase = "visual chair firm clock ability  chef  connect planet  benefit fork frown protect";
+    HDPrivateKey hd(testTempSeedPhrase, "");
     Serial.println(hd);
 //number each word in the 24 word seedphrase
     for (int i = 0; i < tempSeedPhrase.length(); i++) {
@@ -243,6 +247,34 @@ void generateSeed(lv_event_t *e) {
 
     String labelStr = seedPhrase[0];
    // lv_label_set_text(ui_Label28, labelStr.c_str());
+
+
+     //
+String psbt64 = "cHNidP8BAHECAAAAAUKAmWVFG/zLmhHQZ8Q8bQKCoNxxiurIcNZVhafCoLCyAAAAAAD9////AjksAAAAAAAAFgAUvDLbTPtQXj/JTiGj7HTRrvz8ASwiwQAAAAAAABYAFOq0zUDTkmdWzFLl+RydPI47QA4ReCIMAE8BBIiyHgPG2cycgAAAADKRxb1j69WGKYT3nQrjs2zcdlE3UiHFNYyGd3vysjMcAiVPCY671cdIpViKxJr/88kFWlty0jqxfwY8PfU3Tbu3EMh3/URUAACAAAAAgAAAAIAAAQEfN/cAAAAAAAAWABSUBvAKoN3uZMfqYvmU5pVYAoCj5QEDBAEAAAAiBgNa5FjqiQq3akaVNyAsPdho05JgUpccQlhll1wyKD/3FhjId/1EVAAAgAAAAIAAAACAAAAAAAEAAAAAACICAkjtpvsDgJ+za5zGXZjCZhj5fNVw8Uqc+AgQItHhEYiTGMh3/URUAACAAAAAgAAAAIABAAAAAAAAAAA=";
+ Serial.println(psbt64);
+PSBT psbt;
+psbt.parseBase64(psbt64);
+Serial.println("Transactions details:");
+Serial.println("Outputs:");
+// going through all outputs
+for(int i=0; i<psbt.tx.outputsNumber; i++){
+  Serial.print(psbt.tx.txOuts[i].address(&Mainnet));
+  Serial.print(" -> ");
+  // You can also use .btcAmount() function that returns a float in whole Bitcoins
+  Serial.print(int(psbt.tx.txOuts[i].amount));
+  Serial.println(" sat");
+}
+Serial.print("Fee: ");
+// Arduino can't print 64-bit ints so we need to convert it to int
+Serial.print(int(psbt.fee()));
+Serial.println(" sat");
+  Serial.println(psbt);
+    Serial.println("========");
+      Serial.println(psbt.toString());
+            Serial.println(  psbt.toBase64());
+  psbt.sign(hd);
+   Serial.println(  psbt.toBase64());
+  //
 }
 //get currect selected seed word in the UI roller
 void getSelectedSeedWord(lv_event_t *e) {
