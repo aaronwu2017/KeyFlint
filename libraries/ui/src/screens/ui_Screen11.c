@@ -51,6 +51,7 @@ lv_textarea_set_text(ui_TextArea3,"Placeholder...");
 
 
 ui_Keyboard3 = lv_keyboard_create(ui_Screen11);
+lv_keyboard_set_popovers(ui_Keyboard3,true);
 lv_obj_set_width( ui_Keyboard3, 475);
 lv_obj_set_height( ui_Keyboard3, 214);
 lv_obj_set_x( ui_Keyboard3, -4 );
