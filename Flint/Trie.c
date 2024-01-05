@@ -1,11 +1,12 @@
 // Trie.c
 #include "Trie.h"
 
-TrieNode *createNode(void) {
+TrieNode *createNode(int level) {
     TrieNode *newNode = malloc(sizeof(TrieNode));
     if (newNode) {
         int i;
         newNode->isEndOfWord = 0;
+        newNode->level = level; 
         for (i = 0; i < 26; i++) {
             newNode->children[i] = NULL;
         }
@@ -23,7 +24,7 @@ void insert(TrieNode *root, const char *key) {
     for (level = 0; level < length; level++) {
         index = key[level] - 'a';
         if (!pCrawl->children[index]) {
-            pCrawl->children[index] = createNode();
+            pCrawl->children[index] = createNode(pCrawl->level + 1);
             pCrawl->children[index]->parent = pCrawl;
         }
         pCrawl = pCrawl->children[index];
