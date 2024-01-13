@@ -14,7 +14,7 @@ TrieNode *createNode(int level) {
     return newNode;
 }
 
-void insert(TrieNode *root, const char *key) {
+void insert(TrieNode *root, const char *key, int number) {
     int level;
     int length = strlen(key);
     int index;
@@ -29,7 +29,7 @@ void insert(TrieNode *root, const char *key) {
         }
         pCrawl = pCrawl->children[index];
     }
-
+    pCrawl->bip39Number = number;
     pCrawl->isEndOfWord = 1;
 }
 

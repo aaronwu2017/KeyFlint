@@ -12,10 +12,11 @@ typedef struct TrieNode {
     struct TrieNode *parent;
     int isEndOfWord;
     int level; 
+    int bip39Number;
 } TrieNode;
 
 TrieNode *createNode(int level);
-void insert(TrieNode *root, const char *key);
+void insert(TrieNode *root, const char *key, int number);
 void deleteTrie(TrieNode *root);
 
 #endif // TRIE_H

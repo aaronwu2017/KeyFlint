@@ -9,7 +9,7 @@
 
 
 
- void random_start_collecting(uint8_t* outputArray, size_t size) {
+ void esp32_random_collecting(uint8_t* outputArray, size_t size) {
     // from https://docs.espressif.com/projects/esp-idf/en/release-v4.1/api-reference/system/system.html
     // If the RF subsystem is not used by the program, the function bootloader_random_enable() can be
     // called to enable an entropy source.

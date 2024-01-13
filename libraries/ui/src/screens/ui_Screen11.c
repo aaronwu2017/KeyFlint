@@ -4,9 +4,25 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
-
+#include "../../../lvgl/src/extra/widgets/keyboard/lv_keyboard_binary.h"
+#include "../../../lvgl/src/extra/widgets/keyboard/lv_keyboard_seed.h"
 void ui_Screen11_screen_init(void)
 {
+
+
+
+ static const char * kb_map[] = {"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", LV_SYMBOL_BACKSPACE, "\n",
+                                    "1010", "1011", "1100", "1101", "1110", "1111", LV_SYMBOL_DRIVE, LV_SYMBOL_VOLUME_MAX, LV_SYMBOL_EJECT,  LV_SYMBOL_NEW_LINE, "\n",
+                                    LV_SYMBOL_SAVE, LV_SYMBOL_BARS, LV_SYMBOL_CALL, LV_SYMBOL_DIRECTORY, LV_SYMBOL_WARNING, LV_SYMBOL_EYE_CLOSE, LV_SYMBOL_EYE_OPEN, LV_SYMBOL_LIST, ":", "!", "?", "\n",
+                                    LV_SYMBOL_CLOSE, LV_SYMBOL_HOME,  LV_SYMBOL_SETTINGS, LV_SYMBOL_POWER, LV_SYMBOL_OK, NULL
+                                   };
+                                       static const lv_btnmatrix_ctrl_t kb_ctrl[] = {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6,
+                                                     4, 4, 4, 4, 4, 4, 4, 4, 4, 6,
+                                                     4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+                                                     2, 2| 2, 6, 2 | 2, 2
+                                                    };
+
+
 ui_Screen11 = lv_obj_create(NULL);
 lv_obj_clear_flag( ui_Screen11, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Screen11, lv_color_hex(0xF1F1F1), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -50,8 +66,14 @@ lv_textarea_set_text(ui_TextArea3,"Placeholder...");
 
 
 
-ui_Keyboard3 = lv_keyboard_create(ui_Screen11);
+//ui_Keyboard3 = lv_keyboard_create(ui_Screen11);
+ui_Keyboard3 = lv_ex_btnmatrix_binary(ui_Screen11);
+
+
 lv_keyboard_set_popovers(ui_Keyboard3,true);
+// lv_keyboard_set_map(ui_Keyboard3, LV_KEYBOARD_MODE_USER_1, kb_map, kb_ctrl);
+
+
 lv_obj_set_width( ui_Keyboard3, 475);
 lv_obj_set_height( ui_Keyboard3, 214);
 lv_obj_set_x( ui_Keyboard3, -4 );

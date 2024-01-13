@@ -20,13 +20,25 @@ const char * fullEnteredText = lv_textarea_get_text(ta) ;
     if (myTrie == NULL) {
         myTrie = createNode(0);  
         for (int i = 0; i < 2048; i++) {
-            insert(myTrie, wordlist[i]);  // Insert words into the trie
+            insert(myTrie, wordlist[i],i);  // Insert words into the trie
            
         }
         currentNode = myTrie;
    
     }
     myTrie->parent = NULL;
+
+    if(strcmp(txt, "go") == 0) {
+        lv_event_send(obj, LV_EVENT_READY, NULL);
+        //  lv_event_send(obj, LV_EVENT_READY, ta);
+        initiateKeyPair(fullEnteredText);
+        //  initiateKeyPair(fullEnteredText);
+    }
+
+
+
+
+
     if (strcmp(txt, LV_SYMBOL_BACKSPACE) == 0) {
         
         if(currentNode->parent == NULL){
@@ -79,8 +91,8 @@ const char * fullEnteredText = lv_textarea_get_text(ta) ;
     if (currentNode->isEndOfWord == 1) {
 
               lv_textarea_add_text(ta, " ");
-            //    sprintf(strtest, "%d", (9-currentNode->level));
-                lv_textarea_add_text(ta, strtest);
+         //  sprintf(strtest, "%d", (currentNode->bip39Number));
+               // lv_textarea_add_text(ta, strtest);
         // for(int j = 0;j<9-currentNode->level;j++){
         //     lv_textarea_add_text(ta, " ");
         // }
@@ -104,14 +116,20 @@ static const char * btnm_map[] = {"q", "w", "e", "r", "t", "y","u","i", "o","p",
                                   LV_SYMBOL_BACKSPACE,"z", "x", "c", "v", "b","n","m","go",""
                                    };
 
-lv_obj_t * lv_ex_btnmatrix_1(lv_obj_t * obj)
+                                //     static const char * kb_map[] = {"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", LV_SYMBOL_BACKSPACE, "\n",
+                                //     "1010", "1011", "1100", "1101", "1110", "1111", "K", "L", "M",  LV_SYMBOL_NEW_LINE, "\n",
+                                //     "W", "X", "C", "V", "B", "N", ",", ".", ":", "!", "?", "\n",
+                                //     LV_SYMBOL_CLOSE, " ",  " ", " ", LV_SYMBOL_OK, NULL
+                                //    };
+
+lv_obj_t * lv_ex_btnmatrix_seed(lv_obj_t * obj)
 {
     
 
     lv_obj_t * btnm1 = lv_btnmatrix_create(obj);
    lv_btnmatrix_set_map(btnm1, btnm_map);
 
-    lv_btnmatrix_set_btn_ctrl(btnm1, 27, LV_BTNMATRIX_CTRL_CHECKED);
+  //  lv_btnmatrix_set_btn_ctrl(btnm1, 27, LV_BTNMATRIX_CTRL_CHECKED);
     lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
 
      return btnm1;

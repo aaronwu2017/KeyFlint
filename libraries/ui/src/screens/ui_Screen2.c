@@ -16,8 +16,8 @@ lv_obj_set_style_text_font(ui_Screen2, &lv_font_montserrat_36, LV_PART_MAIN| LV_
 ui_Label3 = lv_label_create(ui_Screen2);
 lv_obj_set_width( ui_Label3, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label3, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_Label3, 10 );
-lv_obj_set_y( ui_Label3, -137 );
+lv_obj_set_x( ui_Label3, lv_pct(0) );
+lv_obj_set_y( ui_Label3, lv_pct(-42) );
 lv_obj_set_align( ui_Label3, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label3,"Back up your seed");
 lv_obj_set_style_text_color(ui_Label3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -25,18 +25,19 @@ lv_obj_set_style_text_opa(ui_Label3, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Label3, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Roller2 = lv_roller_create(ui_Screen2);
-lv_obj_set_height( ui_Roller2, 189);
-lv_obj_set_width( ui_Roller2, lv_pct(29));
-lv_obj_set_x( ui_Roller2, -154 );
-lv_obj_set_y( ui_Roller2, -17 );
+lv_roller_set_options( ui_Roller2, "24.question\n18.daughter", LV_ROLLER_MODE_NORMAL );
+lv_obj_set_width( ui_Roller2, lv_pct(38));
+lv_obj_set_height( ui_Roller2, lv_pct(60));
+lv_obj_set_y( ui_Roller2, -19 );
+lv_obj_set_x( ui_Roller2, lv_pct(-31) );
 lv_obj_set_align( ui_Roller2, LV_ALIGN_CENTER );
 lv_obj_set_style_text_font(ui_Roller2, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Panel3 = lv_obj_create(ui_Screen2);
-lv_obj_set_width( ui_Panel3, 300);
-lv_obj_set_height( ui_Panel3, 185);
-lv_obj_set_x( ui_Panel3, 92 );
-lv_obj_set_y( ui_Panel3, -17 );
+lv_obj_set_width( ui_Panel3, lv_pct(60));
+lv_obj_set_height( ui_Panel3, lv_pct(60));
+lv_obj_set_x( ui_Panel3, lv_pct(19) );
+lv_obj_set_y( ui_Panel3, lv_pct(-6) );
 lv_obj_set_align( ui_Panel3, LV_ALIGN_CENTER );
 lv_obj_clear_flag( ui_Panel3, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
@@ -44,10 +45,10 @@ ui_Label13 = lv_label_create(ui_Panel3);
 lv_obj_set_width( ui_Label13, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label13, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Label13, 0 );
-lv_obj_set_y( ui_Label13, 8 );
+lv_obj_set_y( ui_Label13, -10 );
 lv_obj_set_align( ui_Label13, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label13,"Decimal: 1932\nBinary: 10010110010");
-lv_obj_set_style_text_font(ui_Label13, &lv_font_montserrat_28, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_label_set_text(ui_Label13,"Decimal: 1932\nBinary: 00000000000");
+lv_obj_set_style_text_font(ui_Label13, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Button7 = lv_btn_create(ui_Screen2);
 lv_obj_set_height( ui_Button7, 66);

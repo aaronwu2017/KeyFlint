@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <lvgl.h>
-#define SHA256_LEN 32
+
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
 #include "FT6236.h"
@@ -34,7 +34,7 @@ const int i2c_touch_addr = TOUCH_I2C_ADD;
 #define SDA_FT6236 38
 #define SCL_FT6236 39
 
-String seedPhrase[24];
+
 
 class LGFX : public lgfx::LGFX_Device {
   lgfx::Panel_ILI9488 _panel_instance;
@@ -196,129 +196,6 @@ void setup() {
 void loop() {
   lv_timer_handler(); // let the GUI do its work
   delay(5);
-}
-
-void generateSeed(lv_event_t *e) {
-    uint8_t local_entropy_state[SHA256_LEN];
-    random_start_collecting(local_entropy_state, SHA256_LEN);
-    for (int i = 0; i < SHA256_LEN; i++) {
-        Serial.print("entropy_state[");
-        Serial.print(i);
-        Serial.print("] = ");
-        Serial.println(local_entropy_state[i], HEX); // Print in hexadecimal format
-    }
-
-    String entropy1 = "24";
-    String tempSeedPhrase = generateMnemonic(24, local_entropy_state, 256);
-    Serial.println(tempSeedPhrase);
-    splitString(tempSeedPhrase);
-    std::string newPassphrase = "newPassphrase";
-    std::string seedPhraseArray[24];
-    for (int i = 0; i < 24; ++i) {
-    seedPhraseArray[i] = "TestPhrase" + std::to_string(i + 1);  // Creates "TestPhrase1", "TestPhrase2", etc.
-    }
-       Serial.println("finish initialize test array");
-    KeyManager::getInstance().setValues(nullptr, nullptr,seedPhraseArray, &newPassphrase);
-       Serial.println("finish setvalue KeyManager");
-    String options = "";
-    int wordNumber = 1; // Initialize word number counter
-
-   // HDPrivateKey hd(tempSeedPhrase, "");
-   
-    String testTempSeedPhrase = "visual chair firm clock ability  chef  connect planet  benefit fork frown protect";
-    HDPrivateKey hd(testTempSeedPhrase, "");
-    Serial.println(hd);
-//number each word in the 24 word seedphrase
-    for (int i = 0; i < tempSeedPhrase.length(); i++) {
-        if (i == 0 || tempSeedPhrase[i - 1] == ' ') { // Check for the start of a new word
-            options += String(wordNumber) + ". "; // Append the word number and a period
-            wordNumber++; // Increment the word number
-        }
-
-        if (tempSeedPhrase[i] == ' ') {
-            options += '\n'; // Add a newline character instead of space
-        } else {
-            options += tempSeedPhrase[i]; // Add the current character
-        }
-    }
-
-    const char *options_cStr = options.c_str();
-    lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
-
-    String labelStr = seedPhrase[0];
-   // lv_label_set_text(ui_Label28, labelStr.c_str());
-
-
-     //
-String psbt64 = "cHNidP8BAHQCAAAAAdlqndXEV3cg1PwEyNGkIrIlyFcKg+dbpG+DBQap4YgMAQAAAAD9////Ap0FHAAAAAAAFgAUKWKiTSY7eU6H07lF2wXJXtSqYYMHsgEAAAAAABl2qRSfmnq9YAwMqgOYOnfIw9+OBiyy+oisnM4mAE8BBDWHzwNTn3/0gAAAADwB+2uQkAgOsfojzQeHsblsw56QiEabr4CvXTVofxDBAlpc1G2acTSETE6G8Oz2BaJhqorXg84rR7GBm968x6wIEOmyTgBUAACAAQAAgAAAAIAAAQBxAgAAAAEObYKhUzk2v15Cm4ljLfU/QjJSsupUX10ta8BPGzH/ogEAAAAA/f///wIQNslnDgAAABYAFNhwxfuYUZLMRdEYzR5FxCYTqaPmNLgdAAAAAAAWABRcrhZzFldTw60v2DN6hFVqLVvNG12rJQABAR80uB0AAAAAABYAFFyuFnMWV1PDrS/YM3qEVWotW80bAQMEAQAAACIGAzph6HFoI8aiPqO/ox9A2hp7cJ3UNK0j9h934fow1A4EGOmyTgBUAACAAQAAgAAAAIAAAAAAAAAAAAAiAgLedc8K4fjzkzqxan4Xzw7BLV6E5POhPsQkav4SJJKYeRjpsk4AVAAAgAEAAIAAAACAAQAAAAAAAAAAAA==";
- Serial.println(psbt64);
-PSBT psbt;
-psbt.parseBase64(psbt64);
-Serial.println("Transactions details:");
-Serial.println("Outputs:");
-// going through all outputs
-for(int i=0; i<psbt.tx.outputsNumber; i++){
-  Serial.print(psbt.tx.txOuts[i].address(&Mainnet));
-  Serial.print(" -> ");
-  // You can also use .btcAmount() function that returns a float in whole Bitcoins
-  Serial.print(int(psbt.tx.txOuts[i].amount));
-  Serial.println(" sat");
-}
-Serial.print("Fee: ");
-// Arduino can't print 64-bit ints so we need to convert it to int
-Serial.print(int(psbt.fee()));
-Serial.println(" sat");
-  Serial.println(psbt);
-    Serial.println("========");
-      Serial.println(psbt.toString());
-            Serial.println(  psbt.toBase64());
-  psbt.sign(hd);
-   Serial.println(  psbt.toBase64());
-  //
-}
-//get currect selected seed word in the UI roller
-void getSelectedSeedWord(lv_event_t *e) {
-    int wordIndex = lv_roller_get_selected(ui_Roller2);
-
-    // Convert integer to string
-    String wordIndexStr = String(wordIndex);
-
-    // Concatenate with your desired text
-    String labelStr = seedPhrase[wordIndex];
-
-    // Set the label's text
-    // lv_label_set_text(ui_Label28, labelStr.c_str());
-
-
-
-
-    const std::string* mySeedPhrase = KeyManager::getInstance().getSeedPhrase();
-
-// Now mySeedPhrase points to the first element of the seedPhrase array
-// You can access individual phrases like this:
-
-  Serial.println("test start");
-    Serial.println(mySeedPhrase[wordIndex].c_str());
-     Serial.println("test done");
-
-}
-//split seedphrase String into array of 24 strings for displaying information individually
-void splitString(String str) {
-    int wordIndex = 0;
-    int startPos = 0;
-
-    for (int i = 0; i < str.length(); i++) {
-        if (str.charAt(i) == ' ' || i == str.length() - 1) {
-            // Add the last word if we're at the end of the string
-            String word = (i == str.length() - 1) ? str.substring(startPos) : str.substring(startPos, i);
-            seedPhrase[wordIndex++] = word;
-            startPos = i + 1; // Set start position for next word
-
-            if (wordIndex >= 24) {
-                break; // Avoid going beyond the array size
-            }
-        }
-    }
 }
 
 // void handlePassPhrase(){

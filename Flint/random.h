@@ -4,6 +4,6 @@
 #include <stdint.h>
 #include <stddef.h>
 
-void random_start_collecting(uint8_t* outputArray, size_t size);
+void esp32_random_collecting(uint8_t* outputArray, size_t size);
 
 #endif // RANDOM_UTILS_H
