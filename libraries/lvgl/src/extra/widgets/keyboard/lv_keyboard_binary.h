@@ -1,5 +1,5 @@
-#ifndef LV_EX_BTNMATRIX_H
-#define LV_EX_BTNMATRIX_H
+#ifndef LV_EX_BTNMATRIX2_H
+#define LV_EX_BTNMATRIX2_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +17,7 @@ extern "C" {
  * @param obj The object that triggered the event.
  * @param event The event that occurred.
  */
-void btnm_event_handler1(lv_event_t * e);
+void btnm_event_handler2(lv_event_t * e);
 
 /**
  * @brief Create and configure a button matrix.
@@ -25,7 +25,7 @@ void btnm_event_handler1(lv_event_t * e);
  * This function creates a new button matrix on the current active screen,
  * sets up its buttons, and assigns the event handler.
  */
-lv_obj_t * lv_ex_btnmatrix_seed(lv_obj_t * obj);
+lv_obj_t * lv_ex_btnmatrix_binary(lv_obj_t * obj);
 
 #endif /* LV_USE_BTNMATRIX */
 

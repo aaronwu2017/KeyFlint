@@ -9,10 +9,22 @@ KeyManager& KeyManager::getInstance() {
     static KeyManager instance;
     return instance;
 }
+const std::string& KeyManager::getMnemonicsString() const {
+    return mnemonicsString;
+}
+void KeyManager::setHDPrivateKey(const HDPrivateKey* hdKey){
+     this->hd = *hdKey;
+}
 
+void KeyManager::setMnemonicsString(const char* seedphrase) {
+    if (seedphrase != nullptr) {
+        mnemonicsString = seedphrase;
+    }
+}
 void KeyManager::setValues(const HDPrivateKey* hdKey, 
                            const HDPrivateKey* hdPassphraseKey, 
                            const std::string mnemonics[24], 
+                          const std::string* mnemonicsString,
                            const std::string* pass) {
     if (hdKey != nullptr) {
         this->hd = *hdKey;
@@ -23,7 +35,11 @@ void KeyManager::setValues(const HDPrivateKey* hdKey,
     for (int i = 0; i < 24; ++i) {
         this->mnemonic[i] = mnemonics[i];  // Assuming you always want to set mnemonics
     }
+    if (mnemonicsString != nullptr) {
+        this->mnemonicsString = *mnemonicsString;
+    }
     if (pass != nullptr) {
         this->passphrase = *pass;
     }
+    
 }

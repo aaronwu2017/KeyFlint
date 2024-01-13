@@ -35,33 +35,11 @@ void ui_event_Label7( lv_event_t * e);
 lv_obj_t *ui_Label7;
 
 
-// SCREEN: ui_Screen3
-void ui_Screen3_screen_init(void);
-lv_obj_t *ui_Screen3;
-lv_obj_t *ui_Button3;
-lv_obj_t *ui_Label5;
-void ui_event_Button4( lv_event_t * e);
-lv_obj_t *ui_Button4;
-lv_obj_t *ui_Label4;
-void ui_event_Button5( lv_event_t * e);
-lv_obj_t *ui_Button5;
-lv_obj_t *ui_Label6;
-
-
 // SCREEN: ui_Screen5
 void ui_Screen5_screen_init(void);
 lv_obj_t *ui_Screen5;
 lv_obj_t *ui_Panel6;
 lv_obj_t *ui_Label24;
-lv_obj_t *ui_Panel4;
-lv_obj_t *ui_Label20;
-lv_obj_t *ui_Dropdown2;
-lv_obj_t *ui_Panel1;
-lv_obj_t *ui_Label9;
-lv_obj_t *ui_Dropdown1;
-lv_obj_t *ui_Panel2;
-lv_obj_t *ui_Label21;
-lv_obj_t *ui_Dropdown3;
 lv_obj_t *ui_Panel5;
 void ui_event_Button6( lv_event_t * e);
 lv_obj_t *ui_Button6;
@@ -105,8 +83,6 @@ lv_obj_t *ui_Label15;
 void ui_event_Button10( lv_event_t * e);
 lv_obj_t *ui_Button10;
 lv_obj_t *ui_Label16;
-void ui_event_ImgButton1( lv_event_t * e);
-lv_obj_t *ui_ImgButton1;
 
 
 // SCREEN: ui_Screen9
@@ -192,7 +168,7 @@ void ui_event_Button2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_Screen8, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen8_screen_init);
-      generateSeed( e );
+        generateSeed(NULL);
 }
 }
 void ui_event_Button1( lv_event_t * e) {
@@ -222,18 +198,6 @@ if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen1_screen_init);
 }
 }
-void ui_event_Button4( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_Screen3, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen3_screen_init);
-}
-}
-void ui_event_Button5( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen7_screen_init);
-}
-}
 void ui_event_Button6( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
@@ -249,8 +213,7 @@ if ( event_code == LV_EVENT_CLICKED) {
 void ui_event_Keyboard2( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_READY) {
-      _ui_screen_change( &ui_Screen2, LV_SCR_LOAD_ANIM_NONE, 500, 0, &ui_Screen2_screen_init);
-      generateSeed( e );
+      _ui_screen_change( &ui_Screen2, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen2_screen_init);
 }
 }
 void ui_event_TextArea2( lv_event_t * e) {
@@ -274,19 +237,13 @@ if ( event_code == LV_EVENT_SCREEN_UNLOAD_START) {
 void ui_event_Button9( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen2_screen_init);
+      _ui_screen_change( &ui_Screen2, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen2_screen_init);
 }
 }
 void ui_event_Button10( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_Screen7, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen7_screen_init);
-}
-}
-void ui_event_ImgButton1( lv_event_t * e) {
-    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
-      _ui_screen_change( &ui_Screen5, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen5_screen_init);
+      _ui_screen_change( &ui_Screen6, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen6_screen_init);
 }
 }
 void ui_event_ImgButton2( lv_event_t * e) {
@@ -366,7 +323,6 @@ lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE
 lv_disp_set_theme(dispp, theme);
 ui_Screen1_screen_init();
 ui_Screen2_screen_init();
-ui_Screen3_screen_init();
 ui_Screen5_screen_init();
 ui_Screen6_screen_init();
 ui_Screen7_screen_init();

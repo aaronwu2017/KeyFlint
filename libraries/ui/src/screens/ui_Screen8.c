@@ -74,16 +74,7 @@ lv_obj_set_style_text_color(ui_Label16, lv_color_hex(0xFF7129), LV_PART_MAIN | L
 lv_obj_set_style_text_opa(ui_Label16, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Label16, &lv_font_montserrat_30, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_ImgButton1 = lv_imgbtn_create(ui_Screen8);
-lv_imgbtn_set_src(ui_ImgButton1, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_1882376574, NULL);
-lv_obj_set_width( ui_ImgButton1, 53);
-lv_obj_set_height( ui_ImgButton1, 53);
-lv_obj_set_x( ui_ImgButton1, 189 );
-lv_obj_set_y( ui_ImgButton1, -116 );
-lv_obj_set_align( ui_ImgButton1, LV_ALIGN_CENTER );
-
 lv_obj_add_event_cb(ui_Button9, ui_event_Button9, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Button10, ui_event_Button10, LV_EVENT_ALL, NULL);
-lv_obj_add_event_cb(ui_ImgButton1, ui_event_ImgButton1, LV_EVENT_ALL, NULL);
 
 }
