@@ -1,4 +1,5 @@
-SET(SOURCES screens/ui_Screen1.c
+SET(SOURCES 
+    screens/ui_Screen1.c
     screens/ui_Screen2.c
     screens/ui_Screen5.c
     screens/ui_Screen6.c
@@ -10,9 +11,22 @@ SET(SOURCES screens/ui_Screen1.c
     screens/ui_Screen12.c
     screens/ui_Screen13.c
     screens/ui_Screen14.c
+    screens/ui_Screen112.c
+    screens/ui_Screen116.c
+    screens/ui_Screen117.c
+    screens/ui_Screen115.c
+    screens/ui_Screen118.c
+    screens/ui_Screen119.c
+    screens/ui_Screen1110.c
+    screens/ui_Screen1112.c
+    screens/ui_Screen1113.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
-    images/ui_img_1882376574.c)
+    images/ui_img_1882376574.c
+    images/ui_img_white_background_resized_25x20_png.c
+    images/ui_img_black_arrow_resized_25x20_png.c
+    images/ui_img_pure_black_arrow25_png.c
+    images/ui_img_1404577655.c)
 
 add_library(ui ${SOURCES})

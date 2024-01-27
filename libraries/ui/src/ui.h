@@ -145,8 +145,116 @@ extern lv_obj_t *ui_Button19;
 extern lv_obj_t *ui_Label36;
 extern lv_obj_t *ui____initial_actions0;
 
-LV_IMG_DECLARE( ui_img_1882376574);   // assets\Screenshot 2023-11-02 054358.png
 
+
+
+// SCREEN: ui_Screen112
+void ui_Screen112_screen_init(void);
+extern lv_obj_t *ui_Screen112;
+void ui_event_Button2222( lv_event_t * e);
+extern lv_obj_t *ui_Button2222;
+void ui_event_ImgButton117( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton117;
+void ui_event_Button112( lv_event_t * e);
+extern lv_obj_t *ui_Button112;
+extern lv_obj_t *ui_Label112;
+// SCREEN: ui_Screen116
+void ui_Screen116_screen_init(void);
+extern lv_obj_t *ui_Screen116;
+void ui_event_Button2225( lv_event_t * e);
+extern lv_obj_t *ui_Button2225;
+extern lv_obj_t *ui_Label119;
+void ui_event_ImgButton114( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton114;
+// SCREEN: ui_Screen117
+void ui_Screen117_screen_init(void);
+extern lv_obj_t *ui_Screen117;
+void ui_event_Button2228( lv_event_t * e);
+extern lv_obj_t *ui_Button2228;
+extern lv_obj_t *ui_Label118;
+void ui_event_ImgButton118( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton118;
+// SCREEN: ui_Screen115
+void ui_Screen115_screen_init(void);
+extern lv_obj_t *ui_Screen115;
+extern lv_obj_t *ui_Panel115;
+void ui_event_Button116( lv_event_t * e);
+extern lv_obj_t *ui_Button116;
+extern lv_obj_t *ui_Label1114;
+extern lv_obj_t *ui_Label1122;
+void ui_event_Button1120( lv_event_t * e);
+extern lv_obj_t *ui_Button1120;
+void ui_event_ImgButton111( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton111;
+extern lv_obj_t *ui_Image1112;
+// SCREEN: ui_Screen118
+void ui_Screen118_screen_init(void);
+extern lv_obj_t *ui_Screen118;
+extern lv_obj_t *ui_Label116;
+void ui_event_ImgButton119( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton119;
+// SCREEN: ui_Screen119
+void ui_Screen119_screen_init(void);
+extern lv_obj_t *ui_Screen119;
+void ui_event_ImgButton112( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton112;
+void ui_event_Button114( lv_event_t * e);
+extern lv_obj_t *ui_Button114;
+extern lv_obj_t *ui_Label114;
+void ui_event_Button1111( lv_event_t * e);
+extern lv_obj_t *ui_Button1111;
+extern lv_obj_t *ui_Label1118;
+extern lv_obj_t *ui_Panel111;
+void ui_event_Button1112( lv_event_t * e);
+extern lv_obj_t *ui_Button1112;
+extern lv_obj_t *ui_Label1119;
+void ui_event_Button111( lv_event_t * e);
+extern lv_obj_t *ui_Button111;
+extern lv_obj_t *ui_Label111;
+void ui_event_Button113( lv_event_t * e);
+extern lv_obj_t *ui_Button113;
+extern lv_obj_t *ui_Label113;
+void ui_event_Button115( lv_event_t * e);
+extern lv_obj_t *ui_Button115;
+extern lv_obj_t *ui_Label115;
+// SCREEN: ui_Screen1110
+void ui_Screen1110_screen_init(void);
+extern lv_obj_t *ui_Screen1110;
+void ui_event_ImgButton115( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton115;
+extern lv_obj_t *ui_Keyboard113;
+extern lv_obj_t *ui_TextArea113;
+void ui_event_Switch111( lv_event_t * e);
+extern lv_obj_t *ui_Switch111;
+extern lv_obj_t *ui_Label117;
+// SCREEN: ui_Screen1112
+void ui_Screen1112_screen_init(void);
+extern lv_obj_t *ui_Screen1112;
+extern lv_obj_t *ui_Label1131;
+void ui_event_Button2229( lv_event_t * e);
+extern lv_obj_t *ui_Button2229;
+void ui_event_ImgButton116( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton116;
+extern lv_obj_t *ui_Label1110;
+// SCREEN: ui_Screen1113
+void ui_Screen1113_screen_init(void);
+extern lv_obj_t *ui_Screen1113;
+extern lv_obj_t *ui_Label1129;
+void ui_event_Button1116( lv_event_t * e);
+extern lv_obj_t *ui_Button1116;
+extern lv_obj_t *ui_Label32;
+void ui_event_Button2232( lv_event_t * e);
+extern lv_obj_t *ui_Button2232;
+void ui_event_ImgButton113( lv_event_t * e);
+extern lv_obj_t *ui_ImgButton113;
+extern lv_obj_t *ui____initial_actions0;
+
+
+LV_IMG_DECLARE( ui_img_white_background_resized_25x20_png);   // assets\white_background_resized_25x20.png
+LV_IMG_DECLARE( ui_img_black_arrow_resized_25x20_png);   // assets\black_arrow_resized_25x20.png
+LV_IMG_DECLARE( ui_img_pure_black_arrow25_png);   // assets\pure_black_arrow25.png
+LV_IMG_DECLARE( ui_img_1882376574);   // assets\Screenshot 2023-11-02 054358.png
+LV_IMG_DECLARE( ui_img_1404577655);   // assets\three-bars-icon-625.png
 
 
 void ui_init(void);
