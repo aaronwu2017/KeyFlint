@@ -28,7 +28,7 @@ public:
 
     CurrentPSBT(const CurrentPSBT&) = delete;
     CurrentPSBT& operator=(const CurrentPSBT&) = delete;
-
+  void setPSBT(const PSBT& newPSBT);
     std::string getNextPart();
     void setStartExporting(bool value);
     bool getStartExporting() const;

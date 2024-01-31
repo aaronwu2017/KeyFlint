@@ -8,7 +8,9 @@ CurrentPSBT& CurrentPSBT::getInstance() {
     static CurrentPSBT instance;
     return instance;
 }
-
+void CurrentPSBT::setPSBT(const PSBT& newPSBT) {
+    psbt = newPSBT;
+}
 CurrentPSBT::CurrentPSBT() : encoder(nullptr), startExporting(false) {
     // Other initializations if necessary
 }
