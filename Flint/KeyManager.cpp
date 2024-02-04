@@ -9,6 +9,9 @@ KeyManager& KeyManager::getInstance() {
     static KeyManager instance;
     return instance;
 }
+const HDPrivateKey& KeyManager::getHDPrivateKey() const {
+    return hd;
+}
 const std::string& KeyManager::getMnemonicsString() const {
     return mnemonicsString;
 }

@@ -35,15 +35,20 @@ const int i2c_touch_addr = TOUCH_I2C_ADD;
 #define SCL_FT6236 39
 
 #include "CurrentPSBT.h"
-#define SCK       42                  // SCK on SPI3
-#define MISO      41                  // MISO on SPI3 
-#define MOSI      2                   // MOSI on SPI3
-#define CS        1                   // 
-#include <SPI.h>
-#include "FS.h"
-#include <SD.h>
-#define TX1           38 
-#define RX1           39    
+
+// #define SCK       42                  // SCK on SPI3
+// #define MISO      41                  // MISO on SPI3 
+// #define MOSI      2                   // MOSI on SPI3
+// #define CS        1                   // 
+// #include <SPI.h>
+// #include "FS.h"
+// #include <SD.h>
+
+
+//#define TX1           38 
+ //#define RX1           39  
+ // #define RX1           40 
+#define TX1           -1 
 class LGFX : public lgfx::LGFX_Device {
   lgfx::Panel_ILI9488 _panel_instance;
   lgfx::Bus_Parallel16 _bus_instance;
@@ -175,7 +180,7 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   pinMode(LCD_BL, OUTPUT);
   digitalWrite(LCD_BL, HIGH);
-  //touch_init();
+  touch_init();
   
   lv_init();
   lv_disp_draw_buf_init(&draw_buf, buf, NULL, screenWidth * screenHeight / 5);
@@ -198,87 +203,69 @@ void setup() {
 
   ui_init();
   //initializeEncoder();
-  initializeDecoder();
+  //initializeDecoder();
 
   
 
-  SPI.begin(SCK, MISO, MOSI, -1);
-  if (!SD.begin(CS)) {
-    while (!SD.begin(CS)) {
-      Serial.println(F("error with SPI!"));
-      delay(500);
-    }
-  }
-  Serial1.begin(115200, SERIAL_8N1, RX1, TX1);      
+  // SPI.begin(SCK, MISO, MOSI, -1);
+  // if (!SD.begin(CS)) {
+  //   while (!SD.begin(CS)) {
+  //     Serial.println(F("error with SPI!"));
+  //     delay(500);
+  //   }
+  // }
+ // Serial1.begin(115200, SERIAL_8N1, RX1, TX1);      
   Serial.println("Setup done");
 
 }
 
 void loop() {
-  lv_timer_handler(); // let the GUI do its work
-  delay(5);
+    lv_timer_handler(); // let the GUI do its work
+    delay(5);
 
-      CurrentPSBT& currentPSBT = CurrentPSBT::getInstance();
+    // CurrentPSBT& currentPSBT = CurrentPSBT::getInstance();
 
-   // Check the status of startExporting
-    if (currentPSBT.getStartExporting()) {
-    std::string str = currentPSBT.getNextPart();
-    showPSBT(str);
+    // // Check the status of startExporting
+    // if (currentPSBT.getStartExporting()) {
+    //     std::string str = currentPSBT.getNextPart();
+    //     showPSBT(str);
+    //     delay(100);
+    // } else if (currentPSBT.getStartReceiving()) {
+    //     if (!currentPSBT.isDecodeSuccess()) {
+    //     delay(100);
+    //         if (Serial1.available() > 0) {
+    //             String tempVal = "";
+    //             while (Serial1.available() > 0) {
+    //                 tempVal += char(Serial1.read());
+    //             }
+    //             Serial.println(tempVal);
+    //             currentPSBT.receivePart(tempVal.c_str());
+    //             Serial.println(currentPSBT.estimated_percent_complete());
+               
+    //         }
+    //     } else {
+    //         // Next screen
+    //         ur::ByteVector psbtURFormat = currentPSBT.getDecodedUR().cbor();
+    //         std::string psbtURFormatHex = ur::data_to_hex(psbtURFormat);
+    //         if (psbtURFormatHex.size() >= 2 && psbtURFormatHex.substr(0, 2) == "59") {
+    //             // Create a new string from the vector, starting from the 4th byte
+                
 
-      delay(100);
-    } else if (currentPSBT.getStartReceiving()){
-  
-      if (!currentPSBT.isDecodeSuccess ()) {
+    //             _ui_screen_change( &ui_Screen1113, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0, &ui_Screen1113_screen_init);
+    //             std::string strippedString = psbtURFormatHex.substr(6); 
+    //             PSBT psbt;
+    //             psbt.parse(strippedString.c_str());  
+    //             CurrentPSBT::getInstance().setPSBT(psbt);
+    //             displayPSBT();
+    //         }
 
-           if (Serial1.available() > 0) {
-              String tempVal = "";
-              while (Serial1.available() > 0) {
-                tempVal += char(Serial1.read());
-              }
-              Serial.println(tempVal);
-               currentPSBT.receivePart(tempVal.c_str());
-            }
-                     
-        //printByteVector(decoder.result_ur().cbor());
-      }else{
-        //next screen
-        
-      
-        printByteVector(  currentPSBT.getDecodedUR().cbor());
-        ur::ByteVector psbtURFormat = currentPSBT.getDecodedUR().cbor();
-std::vector<uint8_t> prefix = {0x59};
-//CBOR prefix 58-> one byte, 00x00 to 0xFF (0 to 255 in decimal).
-//  59->0x0100 to 0xFFFF (256 to 65,535 in decimal).  5A->0x00010000 to 0xFFFFFFFF (65,536 to 4,294,967,295 in decimal).
-      if (psbtURFormat.size() >= prefix.size() && 
-    std::equal(prefix.begin(), prefix.end(), psbtURFormat.begin())) {
-    // Create a new string from the vector, starting from the 4th byte
-    std::string resultString(psbtURFormat.begin() + 3, psbtURFormat.end());
-    
-    std::string psbtURFormatHex = ur::data_to_hex(psbtURFormat);
-   Serial.println(psbtURFormatHex.c_str());
-   std::string strippedString = psbtURFormatHex.substr(6); 
-        PSBT psbt ;
-      
-        psbt.parse(strippedString.c_str());  
-           CurrentPSBT::getInstance().setPSBT(psbt);
-              Serial.println(resultString.c_str());
-             Serial.println(psbt);
-         }
-    
-      CurrentPSBT::getInstance().setStartReceiving(false);
-      }
-       
-    }
+    //         CurrentPSBT::getInstance().setStartReceiving(false);
+    //     }
+    // }
 
-
-
-      delay(100);
-
-
-
-
-
+    delay(100);
 }
+
 
 // void handlePassPhrase(){
 
@@ -329,13 +316,4 @@ ur::ByteVector hexStringToByteVector(const std::string& hex) {
     }
 
     return bytes;
-}
-void printByteVector(const ur::ByteVector& vec) {
-    for (uint8_t byte : vec) {
-        // Print as a hexadecimal number
-        if (byte < 16) Serial.print("0"); // Print a leading zero for numbers less than 16 (0x10)
-        Serial.print(byte, HEX); // Print the byte in hexadecimal format
-        
-    }
-    Serial.println(); // New line after printing the vector
 }

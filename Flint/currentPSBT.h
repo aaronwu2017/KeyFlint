@@ -30,12 +30,16 @@ public:
     CurrentPSBT& operator=(const CurrentPSBT&) = delete;
   void setPSBT(const PSBT& newPSBT);
     std::string getNextPart();
+    PSBT getPSBT();
     void setStartExporting(bool value);
     bool getStartExporting() const;
     void setStartReceiving(bool value);
     bool getStartReceiving() const;
     void setEncoder(std::unique_ptr<ur::UREncoder> newEncoder);
     void setDecoder(std::unique_ptr<ur::URDecoder> newDecoder);
+    double estimated_percent_complete() const;
+    bool is_failure() const;
+
     void initializeEncoder(const ur::UR& ur, size_t max_fragment_len, uint32_t first_seq_num = 0, size_t min_fragment_len = 10);
      void receivePart(const std::string& part); // Method to receive a part and process it with the decoder.
     bool isDecodeSuccess() const; // Method to check if the decoding was successful.
