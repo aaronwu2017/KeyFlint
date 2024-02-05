@@ -13,6 +13,8 @@ extern "C" {
 void getSelectedSeedWord(lv_event_t * e);
 void generateSeed(const char* entrypy);
 void initiateKeyPair(const char* seedphrase);
+void initializeDecoder();
+void stopPSBTReceving();
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

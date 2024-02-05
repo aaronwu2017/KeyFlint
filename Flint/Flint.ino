@@ -29,12 +29,15 @@ extern "C" {
 #include <assert.h>
 #include <algorithm> 
 //---
+
 const int i2c_touch_addr = TOUCH_I2C_ADD;
 #define LCD_BL 46
 #define SDA_FT6236 38
 #define SCL_FT6236 39
-
-
+//-----
+#include "CurrentPSBT.h"
+#define RX1           40 
+#define TX1           -1 
 
 class LGFX : public lgfx::LGFX_Device {
   lgfx::Panel_ILI9488 _panel_instance;
@@ -189,6 +192,7 @@ void setup() {
   lv_indev_drv_register(&indev_drv);
 
   ui_init();
+  Serial1.begin(115200, SERIAL_8N1, RX1, TX1); 
   Serial.println("Setup done");
 
 }
@@ -196,6 +200,45 @@ void setup() {
 void loop() {
   lv_timer_handler(); // let the GUI do its work
   delay(5);
+  CurrentPSBT& currentPSBT = CurrentPSBT::getInstance();
+
+    // Check the status of startExporting
+    if (currentPSBT.getStartExporting()) {
+        std::string str = currentPSBT.getNextPart();
+    //    showPSBT(str);
+        delay(100);
+    } else if (currentPSBT.getStartReceiving()) {
+        if (!currentPSBT.isDecodeSuccess()) {
+        delay(100);
+            if (Serial1.available() > 0) {
+                String tempVal = "";
+                while (Serial1.available() > 0) {
+                    tempVal += char(Serial1.read());
+                }
+                Serial.println(tempVal);
+                currentPSBT.receivePart(tempVal.c_str());
+                Serial.println(currentPSBT.estimated_percent_complete());
+               
+            }
+        } else {
+            // Next screen
+            ur::ByteVector psbtURFormat = currentPSBT.getDecodedUR().cbor();
+            std::string psbtURFormatHex = ur::data_to_hex(psbtURFormat);
+            if (psbtURFormatHex.size() >= 2 && psbtURFormatHex.substr(0, 2) == "59") {
+                // Create a new string from the vector, starting from the 4th byte
+                
+
+                _ui_screen_change( &ui_Screen1113, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0, &ui_Screen1113_screen_init);
+                std::string strippedString = psbtURFormatHex.substr(6); 
+                PSBT psbt;
+                psbt.parse(strippedString.c_str());  
+                CurrentPSBT::getInstance().setPSBT(psbt);
+               // displayPSBT();
+            }
+
+            CurrentPSBT::getInstance().setStartReceiving(false);
+        }
+    }
 }
 
 // void handlePassPhrase(){
@@ -211,3 +254,18 @@ void loop() {
 //         parts.push_back(encoder.next_part());
 //     }    
 // }
+void initializeDecoder(){
+
+
+auto decoder = std::make_unique<ur::URDecoder>();
+
+
+CurrentPSBT::getInstance().setDecoder(std::move(decoder));
+CurrentPSBT::getInstance().setStartReceiving(true);
+
+} 
+
+void stopPSBTReceving(){
+
+  CurrentPSBT::getInstance().setStartReceiving(false);
+}
