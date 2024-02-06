@@ -16,18 +16,9 @@ extern "C" {
 #include "Hash.h"
 //----ur
 
-#include "crc32.h"
-#include "xoshiro256.hpp"
-#include "utils.hpp"
-#include "random-sampler.hpp"
-#include "fountain-encoder.hpp"
-#include "fountain-utils.hpp"
+
 #include "test-utils.hpp"
-#include <vector>
-#include <array>
-#include <string>
-#include <assert.h>
-#include <algorithm> 
+
 //---
 
 const int i2c_touch_addr = TOUCH_I2C_ADD;
@@ -200,44 +191,16 @@ void setup() {
 void loop() {
   lv_timer_handler(); // let the GUI do its work
   delay(5);
-  CurrentPSBT& currentPSBT = CurrentPSBT::getInstance();
 
+  CurrentPSBT& currentPSBT = CurrentPSBT::getInstance();
+  //Serial.println(currentPSBT.getStartExporting());
+ //
     // Check the status of startExporting
     if (currentPSBT.getStartExporting()) {
-        std::string str = currentPSBT.getNextPart();
-    //    showPSBT(str);
-        delay(100);
+        encoderActivity();
+     
     } else if (currentPSBT.getStartReceiving()) {
-        if (!currentPSBT.isDecodeSuccess()) {
-        delay(100);
-            if (Serial1.available() > 0) {
-                String tempVal = "";
-                while (Serial1.available() > 0) {
-                    tempVal += char(Serial1.read());
-                }
-                Serial.println(tempVal);
-                currentPSBT.receivePart(tempVal.c_str());
-                Serial.println(currentPSBT.estimated_percent_complete());
-               
-            }
-        } else {
-            // Next screen
-            ur::ByteVector psbtURFormat = currentPSBT.getDecodedUR().cbor();
-            std::string psbtURFormatHex = ur::data_to_hex(psbtURFormat);
-            if (psbtURFormatHex.size() >= 2 && psbtURFormatHex.substr(0, 2) == "59") {
-                // Create a new string from the vector, starting from the 4th byte
-                
-
-                _ui_screen_change( &ui_Screen1113, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0, &ui_Screen1113_screen_init);
-                std::string strippedString = psbtURFormatHex.substr(6); 
-                PSBT psbt;
-                psbt.parse(strippedString.c_str());  
-                CurrentPSBT::getInstance().setPSBT(psbt);
-               // displayPSBT();
-            }
-
-            CurrentPSBT::getInstance().setStartReceiving(false);
-        }
+      decoderActivity();
     }
 }
 
@@ -245,27 +208,4 @@ void loop() {
 
 // }
 
-// void signAndExport(){
-// Encoder en = new 
-//   auto ur = make_message_ur(256);
-//     auto encoder = ur::UREncoder(ur, 30);
-//     ur::StringVector parts;
-//     for(int i = 0; i < 20; i++) {
-//         parts.push_back(encoder.next_part());
-//     }    
-// }
-void initializeDecoder(){
 
-
-auto decoder = std::make_unique<ur::URDecoder>();
-
-
-CurrentPSBT::getInstance().setDecoder(std::move(decoder));
-CurrentPSBT::getInstance().setStartReceiving(true);
-
-} 
-
-void stopPSBTReceving(){
-
-  CurrentPSBT::getInstance().setStartReceiving(false);
-}

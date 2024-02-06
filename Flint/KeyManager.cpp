@@ -15,6 +15,9 @@ const std::string& KeyManager::getMnemonicsString() const {
 void KeyManager::setHDPrivateKey(const HDPrivateKey* hdKey){
      this->hd = *hdKey;
 }
+const HDPrivateKey& KeyManager::getHDPrivateKey() const {
+    return hd;
+}
 
 void KeyManager::setMnemonicsString(const char* seedphrase) {
     if (seedphrase != nullptr) {

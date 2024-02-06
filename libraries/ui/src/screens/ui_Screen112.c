@@ -68,4 +68,25 @@ lv_obj_add_event_cb(ui_Button2222, ui_event_Button2222, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_ImgButton117, ui_event_ImgButton117, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_Button112, ui_event_Button112, LV_EVENT_ALL, NULL);
 
+//qr
+
+ lv_color_t bg_color = lv_palette_lighten(LV_PALETTE_LIGHT_BLUE, 5);
+    lv_color_t fg_color = lv_palette_darken(LV_PALETTE_BLUE, 4);
+
+ qr = lv_qrcode_create(ui_Screen112, 220, lv_color_hex3(0x000),lv_color_hex3(0xeef));
+
+  //  // lv_qrcode_set_size(qr, 150);
+  //  // lv_qrcode_set_dark_color(qr, fg_color);
+  // //  lv_qrcode_set_light_color(qr, bg_color);
+  
+//   const char * data = "Hello world";
+// lv_qrcode_update(qr, data, strlen(data));
+
+
+    lv_obj_center(qr);
+
+    /*Add a border with bg_color*/
+    lv_obj_set_style_border_color(qr, bg_color, 0);
+    lv_obj_set_style_border_width(qr, 5, 0);
+
 }

@@ -27,6 +27,7 @@ const std::string* getSeedPhrase() const {
 
 const std::string& getMnemonicsString() const;
 void setHDPrivateKey(const HDPrivateKey* hdKey);
+const HDPrivateKey& getHDPrivateKey() const;
 void setMnemonicsString(const char* seedphrase);
   void setValues(const HDPrivateKey* hdKey, 
                    const HDPrivateKey* hdPassphraseKey, 
