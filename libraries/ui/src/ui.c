@@ -162,7 +162,7 @@ lv_obj_t *ui_ImgButton117;
 void ui_event_Button112( lv_event_t * e);
 lv_obj_t *ui_Button112;
 lv_obj_t *ui_Label112;
-
+lv_obj_t * qr;
 
 // SCREEN: ui_Screen116
 void ui_Screen116_screen_init(void);
@@ -635,5 +635,5 @@ ui_Screen1110_screen_init();
 ui_Screen1112_screen_init();
 ui_Screen1113_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
-lv_disp_load_scr( ui_Screen1);
+lv_disp_load_scr( ui_Screen112);
 }

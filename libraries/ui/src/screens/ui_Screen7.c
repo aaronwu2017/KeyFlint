@@ -4,7 +4,7 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
-#include "../../../lvgl/src/extra/widgets/keyboard/lv_keyboard_seed.h"
+#include "../../../lvgl/src/widgets/keyboard/lv_keyboard_seed.h"
 
 void ui_Screen7_screen_init(void)
 {

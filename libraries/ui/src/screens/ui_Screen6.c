@@ -4,7 +4,7 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
-#include "../../../lvgl/src/extra/widgets/keyboard/lv_keyboard_binary.h"
+#include "../../../lvgl/src/widgets/keyboard/lv_keyboard_binary.h"
 void ui_Screen6_screen_init(void)
 {
 ui_Screen6 = lv_obj_create(NULL);
