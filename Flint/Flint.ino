@@ -16,18 +16,9 @@ extern "C" {
 #include "Hash.h"
 //----ur
 
-#include "crc32.h"
-#include "xoshiro256.hpp"
+
 #include "utils.hpp"
-#include "random-sampler.hpp"
-#include "fountain-encoder.hpp"
-#include "fountain-utils.hpp"
-#include "test-utils.hpp"
-#include <vector>
-#include <array>
-#include <string>
-#include <assert.h>
-#include <algorithm> 
+
 //---
 
 const int i2c_touch_addr = TOUCH_I2C_ADD;
