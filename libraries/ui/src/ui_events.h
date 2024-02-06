@@ -15,6 +15,7 @@ void generateSeed(const char* entrypy);
 void initiateKeyPair(const char* seedphrase);
 void initializeDecoder();
 void stopPSBTReceving();
+void signAndExport();   
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
