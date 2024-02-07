@@ -191,8 +191,10 @@ void setup() {
 void loop() {
   lv_timer_handler(); // let the GUI do its work
   delay(5);
+ //  Serial.println(freeMemory());
   CurrentPSBT& currentPSBT = CurrentPSBT::getInstance();
-
+    const char * data = "Hello world";
+ //lv_qrcode_update(qr, data, strlen(data));
     // Check the status of startExporting
     // if (currentPSBT.getStartExporting()) {
     //     encoderActivity();
