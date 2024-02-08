@@ -358,7 +358,7 @@ if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
 void ui_event_Keyboard1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_READY) {
-      _ui_screen_change( &ui_Screen9, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen9_screen_init);
+      _ui_screen_change( &ui_Screen119, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen119_screen_init);
 }
 }
 void ui_event_TextArea1( lv_event_t * e) {
