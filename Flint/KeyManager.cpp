@@ -24,6 +24,9 @@ void KeyManager::setMnemonicsString(const char* seedphrase) {
         mnemonicsString = seedphrase;
     }
 }
+const std::string* KeyManager::getMnemonic() const {
+    return mnemonic; // Return a pointer to the first element of the array
+}
 void KeyManager::setValues(const HDPrivateKey* hdKey, 
                            const HDPrivateKey* hdPassphraseKey, 
                            const std::string mnemonics[24], 

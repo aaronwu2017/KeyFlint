@@ -35,7 +35,7 @@ lv_label_set_text(ui_Label116,"Public Key");
 lv_obj_add_state( ui_Label116, LV_STATE_PRESSED );     /// States
 lv_obj_set_style_text_color(ui_Label116, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_Label116, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_Label116, &lv_font_montserrat_24, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_Label116, &lv_font_montserrat_18, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_ImgButton119 = lv_imgbtn_create(ui_Screen118);
 lv_imgbtn_set_src(ui_ImgButton119, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_white_background_resized_25x20_png, NULL);

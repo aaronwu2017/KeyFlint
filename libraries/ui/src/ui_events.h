@@ -17,6 +17,9 @@ void initializeDecoder();
 void stopPSBTReceving();
 void signAndExport();   
 void stopPSBTExporting();
+void displayPrivateKey();
+void displayAddresses();
+void displayPublicKey();
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

@@ -1,0 +1,1 @@
+const Network* networkParams = &Testnet; 

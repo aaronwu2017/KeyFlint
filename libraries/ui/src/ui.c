@@ -547,6 +547,7 @@ void ui_event_Button1112( lv_event_t * e) {
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_Screen116, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen116_screen_init);
       _ui_basic_set_property(ui_Panel111, _UI_BASIC_PROPERTY_POSITION_X,  -500);
+        displayAddresses();
 }
 }
 
@@ -555,6 +556,7 @@ void ui_event_Button111( lv_event_t * e) {
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_Screen117, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen117_screen_init);
       _ui_basic_set_property(ui_Panel111, _UI_BASIC_PROPERTY_POSITION_X,  -500);
+          displayPrivateKey();
 }
 }
 void ui_event_Button113( lv_event_t * e) {
@@ -562,6 +564,7 @@ void ui_event_Button113( lv_event_t * e) {
 if ( event_code == LV_EVENT_CLICKED) {
       _ui_screen_change( &ui_Screen118, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen118_screen_init);
       _ui_basic_set_property(ui_Panel111, _UI_BASIC_PROPERTY_POSITION_X,  -500);
+      displayPublicKey();
 }
 }
 

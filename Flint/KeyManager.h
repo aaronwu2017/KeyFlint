@@ -24,7 +24,7 @@ public:
 const std::string* getSeedPhrase() const {
         return mnemonic;  
     }
-
+ const std::string* getMnemonic() const;
 const std::string& getMnemonicsString() const;
 void setHDPrivateKey(const HDPrivateKey* hdKey);
 const HDPrivateKey& getHDPrivateKey() const;

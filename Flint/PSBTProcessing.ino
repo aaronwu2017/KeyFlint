@@ -115,7 +115,6 @@ CurrentPSBT::getInstance().setStartExporting(true);
  void displayPSBT(){
   HDPrivateKey hd = KeyManager::getInstance().getHDPrivateKey();
   PSBT psbt = CurrentPSBT::getInstance().getPSBT();
-
   // Use a String to accumulate the output
   String output = "\n\n Transactions details:\n";
 
