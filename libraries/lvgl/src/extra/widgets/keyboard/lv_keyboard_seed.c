@@ -37,6 +37,24 @@ const char * fullEnteredText = lv_textarea_get_text(ta) ;
 
 
 
+if (strcmp(txt, "space") == 0) {
+    if (currentNode->isEndOfWord == 0) {
+        return;
+    } 
+    if (fullEnteredText != NULL && strlen(fullEnteredText) > 0) { // Ensure the string is not NULL and not empty
+        char lastCharacter = fullEnteredText[strlen(fullEnteredText) - 1]; // Get the last character of the text
+        if (lastCharacter != ' ') { // Check if the last character is not a space
+            lv_textarea_add_text(ta, " "); // Add a space only if the last character is not a space
+            currentNode = myTrie;
+            for (int i = 0; i < 26; i++) {
+                lv_btnmatrix_clear_btn_ctrl(obj, letterTobtnm_mapIndex[i], LV_BTNMATRIX_CTRL_HIDDEN);
+             }
+             lv_btnmatrix_set_btn_ctrl(obj, letterTobtnm_mapIndex[23], LV_BTNMATRIX_CTRL_HIDDEN);
+        }
+        // If the last character is a space, do nothing
+    } 
+    return; // Return after handling the "space" case
+}
 
 
     if (strcmp(txt, LV_SYMBOL_BACKSPACE) == 0) {
@@ -88,7 +106,22 @@ const char * fullEnteredText = lv_textarea_get_text(ta) ;
         lv_btnmatrix_clear_btn_ctrl(obj, letterTobtnm_mapIndex[i], LV_BTNMATRIX_CTRL_HIDDEN);
     }
     lv_textarea_add_text(ta, txt);
-    if (currentNode->isEndOfWord == 1) {
+
+
+
+    int hasChild = 0;
+    for (int i = 0; i < 26; i++) {
+        if (currentNode->children[i] != NULL) {
+            hasChild = 1;
+            break;
+        }
+    }
+
+
+    if (currentNode->isEndOfWord == 1 && hasChild ==0) {
+ //lv_btnmatrix_set_map(btnm1, btnm_map_go);
+
+
 
               lv_textarea_add_text(ta, " ");
          //  sprintf(strtest, "%d", (currentNode->bip39Number));
@@ -110,10 +143,15 @@ const char * fullEnteredText = lv_textarea_get_text(ta) ;
     }
 }
 
+static const char * btnm_map_go[] = {"q", "w", "e", "r", "t", "y","u","i", "o","p","\n",
+                                  "a", "s", "d", "f", "g","h","j","k","l", "\n",
+                                  LV_SYMBOL_BACKSPACE,"z", "x", "c", "v", "b","n","m","go222222",""
+                                   };
+
 
 static const char * btnm_map[] = {"q", "w", "e", "r", "t", "y","u","i", "o","p","\n",
                                   "a", "s", "d", "f", "g","h","j","k","l", "\n",
-                                  LV_SYMBOL_BACKSPACE,"z", "x", "c", "v", "b","n","m","go",""
+                                  LV_SYMBOL_BACKSPACE,"z", "x", "c", "v", "b","n","m","space","go",""
                                    };
 
                                 //     static const char * kb_map[] = {"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", LV_SYMBOL_BACKSPACE, "\n",
@@ -128,6 +166,7 @@ lv_obj_t * lv_ex_btnmatrix_seed(lv_obj_t * obj)
 
     lv_obj_t * btnm1 = lv_btnmatrix_create(obj);
    lv_btnmatrix_set_map(btnm1, btnm_map);
+ lv_btnmatrix_set_btn_width(btnm1, 27,  50);
 
   //  lv_btnmatrix_set_btn_ctrl(btnm1, 27, LV_BTNMATRIX_CTRL_CHECKED);
     lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);

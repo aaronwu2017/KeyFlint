@@ -69,12 +69,40 @@ void splitString(const std::string& str, std::string seedPhraseArray[24]) {
 }
 
 
+//todo refactor to make it more clear
+void initiateKeyPair(const char* seedphrase) {
+  std::string seedphraseStr(seedphrase);
 
-void initiateKeyPair(const char* seedphrase){
-    Serial.println(seedphrase);
-    HDPrivateKey hd(seedphrase, "");
-  //  KeyManager::getInstance().setMnemonicsString(seedphrase);
+    // Check if the last character is a space
+if (!seedphraseStr.empty() && seedphraseStr.back() == ' ') {
+       std::string seedPhraseArray[24];
+        seedphraseStr.pop_back();
+
+        splitString(seedphraseStr, seedPhraseArray);
+    
+    // Convert the array back to a single string without trailing space
+    std::string mnemonicsString;
+    for (int i = 0; i < 24 && !seedPhraseArray[i].empty(); i++) {
+        if (i > 0) mnemonicsString += " ";
+        mnemonicsString += seedPhraseArray[i];
+    }
+
+    // Use the mnemonicsString for operations
+    Serial.println(mnemonicsString.c_str());
+    HDPrivateKey hd(mnemonicsString.c_str(), "");
+    KeyManager::getInstance().setMnemonicsString(mnemonicsString.c_str());
     KeyManager::getInstance().setHDPrivateKey(&hd);
+    
+    // Additionally, set the mnemonic array in KeyManager
+    KeyManager::getInstance().setMnemonicWords(seedPhraseArray);
+        
+    } else {
+        // If the last character is not a space, proceed as before
+        Serial.println(seedphrase);
+        HDPrivateKey hd(seedphrase, "");
+        KeyManager::getInstance().setMnemonicsString(seedphrase);
+        KeyManager::getInstance().setHDPrivateKey(&hd);
+    }
 }
 
 

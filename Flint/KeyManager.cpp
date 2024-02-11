@@ -24,6 +24,11 @@ void KeyManager::setMnemonicsString(const char* seedphrase) {
         mnemonicsString = seedphrase;
     }
 }
+void KeyManager::setMnemonicWords(const std::string words[24]) {
+    for (int i = 0; i < 24; ++i) {
+        mnemonic[i] = words[i];
+    }
+}
 const std::string* KeyManager::getMnemonic() const {
     return mnemonic; // Return a pointer to the first element of the array
 }

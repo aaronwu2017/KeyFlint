@@ -24,11 +24,13 @@ public:
 const std::string* getSeedPhrase() const {
         return mnemonic;  
     }
+    
  const std::string* getMnemonic() const;
 const std::string& getMnemonicsString() const;
 void setHDPrivateKey(const HDPrivateKey* hdKey);
 const HDPrivateKey& getHDPrivateKey() const;
 void setMnemonicsString(const char* seedphrase);
+void setMnemonicWords(const std::string words[24]);
   void setValues(const HDPrivateKey* hdKey, 
                    const HDPrivateKey* hdPassphraseKey, 
                    const std::string mnemonics[24], 
