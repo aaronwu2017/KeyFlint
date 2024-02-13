@@ -62,10 +62,11 @@ void decoderActivity(){
 
 void initializeEncoder(){
 
- std::string hex = "70736274FF0100710200000001ED84DAEC9AC7339866EBDD783D2EEF73D852B19727D12CFBA452C5B4C55DACA60100000000FDFFFFFF02AE7F020000000000160014FD15359F2FB4535B53EADD5D8B22419DC8F51DB69CAD0000000000001600149715AAF35C6CABC6AA7B74A21BC3C6A5203D4463BC0D0C004F010488B21E0343B8F0F08000000085B6BA9FD5EFC1E94A2EF228A69F2A0F3227BD09E99B3F93C94AC82CBD805554029359AF864F4EED5EEAA3A98C3A3E719E806153BCFEE162E352BB3F4AAA2D6F30107E1B62C25400008000000080000000800001011F0241030000000000160014DB78D10BC82CB54A8CBE0EAB10D5B6F5FA4D92F10103040100000022060348C5CD76FEE2E91017333FFC35F27EB895D1146DA0A1DDB6C38CB69361ECF734187E1B62C25400008000000080000000800100000001000000002202030FA9F933DBDB87540324D501EC5695D7E1CFAB40E037A26FE3EE398AA5CB2F58187E1B62C254000080000000800000008001000000020000000000";
 
- 
-  ur::ByteVector message = hexStringToByteVector(hex);
+ PSBT psbt= CurrentPSBT::getInstance().getPSBT();
+   std::string psbtAsString = psbt.toString().c_str();
+
+    ur::ByteVector message = hexStringToByteVector(psbtAsString);
   ur::ByteVector cbor;
   ur::CborLite::encodeBytes(cbor, message);
   auto ur =  ur::UR("crypto-psbt", cbor);
@@ -116,11 +117,11 @@ CurrentPSBT::getInstance().setStartExporting(true);
   HDPrivateKey hd = KeyManager::getInstance().getHDPrivateKey();
   PSBT psbt = CurrentPSBT::getInstance().getPSBT();
   // Use a String to accumulate the output
-  String output = "\n\n Transactions details:\n";
+  String output = "\n\n\n\n Transactions details:\n";
 
   // going through all outputs
   for(int i = 0; i < psbt.tx.outputsNumber; i++){
-    output += psbt.tx.txOuts[i].address(&Testnet); // Append address
+    output += psbt.tx.txOuts[i].address(&Mainnet); // Append address
 
     // check if it is a change output
     if(psbt.txOutsMeta[i].derivationsLen > 0){ // there is derivation path
@@ -128,7 +129,7 @@ CurrentPSBT::getInstance().setStartExporting(true);
       HDPublicKey pub = hd.derive(der.derivation, der.derivationLen).xpub();
       // as pub is HDPublicKey it will also generate correct address type
       if(pub.address() == psbt.tx.txOuts[i].address()){
-        output += " (change) ";
+        output += "\n (change) ";
       }
     }
 
@@ -136,7 +137,10 @@ CurrentPSBT::getInstance().setStartExporting(true);
     output += int(psbt.tx.txOuts[i].amount); // Append amount
     output += " sat\n\n";
   }
-
+ long long feeAmount = psbt.fee(); // 
+  output += "Fee: ";
+  output += feeAmount; // C
+  output += " sat\n";
   // Now use the output String to set the label text
   lv_label_set_text_static(ui_Label1129, output.c_str());
 
