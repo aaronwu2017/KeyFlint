@@ -121,7 +121,7 @@ CurrentPSBT::getInstance().setStartExporting(true);
 
   // going through all outputs
   for(int i = 0; i < psbt.tx.outputsNumber; i++){
-    output += psbt.tx.txOuts[i].address(&Mainnet); // Append address
+    output += psbt.tx.txOuts[i].address(networkParams); // Append address
 
     // check if it is a change output
     if(psbt.txOutsMeta[i].derivationsLen > 0){ // there is derivation path

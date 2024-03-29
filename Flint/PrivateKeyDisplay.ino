@@ -1,6 +1,7 @@
+#include "userConfig.h"
 void displayPrivateKey() {
     HDPrivateKey hd = KeyManager::getInstance().getHDPrivateKey();
-    HDPrivateKey account = hd.derive("m/84'/0'/0'/");
+  HDPrivateKey account = hd.derive(derivationPath);
     // Convert HDPrivateKey to string for manipulation
     String keyString = account.toString();
 

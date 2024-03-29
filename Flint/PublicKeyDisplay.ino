@@ -1,13 +1,15 @@
+#include "userConfig.h"
 void displayPublicKey() {
     // Get the master HD private key from the KeyManager
     HDPrivateKey hd = KeyManager::getInstance().getHDPrivateKey();
     
     // Derive the BIP84 native SegWit account for mainnet (assuming mainnet with '0', adjust if needed)
-    HDPrivateKey account = hd.derive("m/84'/0'/0'");
+    HDPrivateKey account = hd.derive(derivationPath);
     
     // Get the extended public key (xpub) from the derived account
     HDPublicKey xpub = account.xpub();
-    xpub.type = P2WPKH; // Ensure the type is set for correct address derivation
+    xpub.type = myScriptType ; 
+; // Ensure the type is set for correct address derivation
     
     // Convert the xpub to a string for display
     String xpubString = xpub.toString();

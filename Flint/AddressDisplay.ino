@@ -1,10 +1,11 @@
+#include "userConfig.h"
 void displayAddresses() {
     HDPrivateKey hd = KeyManager::getInstance().getHDPrivateKey();
     
     // Assuming derive() can correctly handle BIP84 derivation paths
     // and your HDPrivateKey class or a related class has a method to derive addresses
     // Derive the account level private key for account 0
-    HDPrivateKey account = hd.derive("m/84'/0'/0'");
+    HDPrivateKey account = hd.derive(derivationPath);
 
     // This string will accumulate the addresses
     String output = "\n\n\n\nFirst 10 Native SegWit addresses:\n";

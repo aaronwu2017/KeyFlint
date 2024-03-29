@@ -5,9 +5,9 @@
 #include <LovyanGFX.hpp>
 #include "FT6236.h"
 
-extern "C" {
-#include "random.h"
-}
+// extern "C" {
+// #include "random.h"
+// }
 #include "KeyManager.h"
 #include <ui.h>
 #include "Bitcoin.h"
