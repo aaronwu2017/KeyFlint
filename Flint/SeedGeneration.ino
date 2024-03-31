@@ -8,7 +8,6 @@ extern "C" {
 #include "utility/trezor/bip39_english.h"
 static TrieNode *myTrie = NULL;
 static TrieNode *currentNode = NULL;
-String seedPhrase[24];
 
 // Function to get the currently selected seed word in the UI roller
 void getSelectedSeedWord(lv_event_t *e) {
@@ -69,35 +68,30 @@ void splitString(const std::string& str, std::string seedPhraseArray[24]) {
 }
 
 
-//todo refactor to make it more clear
 void initiateKeyPair(const char* seedphrase) {
   std::string seedphraseStr(seedphrase);
-
-    // Check if the last character is a space for user input seed path
-
-    if( seedphraseStr.back() == ' '){
-         seedphraseStr.pop_back();
-    }
-       std::string seedPhraseArray[24];
+  // Check if the last character is a space for user input seed path
+  if( seedphraseStr.back() == ' '){
+    seedphraseStr.pop_back();
+  }
+  std::string seedPhraseArray[24];
      
 
-        splitString(seedphraseStr, seedPhraseArray);
+  splitString(seedphraseStr, seedPhraseArray);
     
-    // Convert the array back to a single string without trailing space
-    std::string mnemonicsString;
-    for (int i = 0; i < 24 && !seedPhraseArray[i].empty(); i++) {
-        if (i > 0) mnemonicsString += " ";
-        mnemonicsString += seedPhraseArray[i];
-    }
-
-    Serial.println(mnemonicsString.c_str());
-
-     HDPrivateKey hd(seedphraseStr.c_str(), "");
-    KeyManager::getInstance().setMnemonicsString(seedphraseStr.c_str());
-    KeyManager::getInstance().setHDPrivateKey(&hd);
+  // Convert the array back to a single string without trailing space
+  std::string mnemonicsString;
+  for (int i = 0; i < 24 && !seedPhraseArray[i].empty(); i++) {
+    if (i > 0) mnemonicsString += " ";
+      mnemonicsString += seedPhraseArray[i];
+  }
+  Serial.println(mnemonicsString.c_str());
+  HDPrivateKey hd(seedphraseStr.c_str(), "");
+  KeyManager::getInstance().setMnemonicsString(seedphraseStr.c_str());
+  KeyManager::getInstance().setHDPrivateKey(&hd);
     
-    // Additionally, set the mnemonic array in KeyManager
-    KeyManager::getInstance().setMnemonicWords(seedPhraseArray);
+  // Additionally, set the mnemonic array in KeyManager
+  KeyManager::getInstance().setMnemonicWords(seedPhraseArray);
         
 }
 
@@ -107,7 +101,6 @@ void generateSeed(const char* userEntropy) {
     uint8_t final_entropy_state[SHA256_LEN];
     getFinalRandomEntropy(final_entropy_state,256,userEntropy);
     String seedPhraseString =  generateMnemonic(24, final_entropy_state,256);
-
 
     initiateKeyPair(seedPhraseString.c_str());
     displaySeedOnUI();
@@ -145,43 +138,31 @@ void getFinalRandomEntropy(uint8_t* outputArray, size_t size, const char* userEn
 }
 
 void displaySeedOnUI(){
-
  if (myTrie == NULL) {
-        myTrie = createNode(0);  
-        for (int i = 0; i < 2048; i++) {
-            insert(myTrie, wordlist[i],i);  // Insert words into the trie
-           
-        }
-        currentNode = myTrie;
-   
-    }
+      myTrie = createNode(0);  
+      for (int i = 0; i < 2048; i++) {
+        insert(myTrie, wordlist[i],i);  // Insert words into the trie
+      }
+      currentNode = myTrie; 
+  }
+  std::string seedPhraseStdString = KeyManager::getInstance().getMnemonicsString();
+  String options = "";
+  int wordNumber = 1; // Initialize word number counter
 
-
-
-std::string seedPhraseStdString = KeyManager::getInstance().getMnemonicsString();
-
-    String options = "";
-    int wordNumber = 1; // Initialize word number counter
-
-
-//number each word in the 24 word seedphrase
-    for (int i = 0; i < seedPhraseStdString.length(); i++) {
-        if (i == 0 || seedPhraseStdString[i - 1] == ' ') { // Check for the start of a new word
-            options += String(wordNumber) + ". "; // Append the word number and a period
-            wordNumber++; // Increment the word number
-        }
-
-        if (seedPhraseStdString[i] == ' ') {
-            options += '\n'; // Add a newline character instead of space
-        } else {
-            options += seedPhraseStdString[i]; // Add the current character
-        }
-    }
-
-    const char *options_cStr = options.c_str();
-    lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
-
-    //String labelStr = seedPhrase[0];
+  //number each word in the 24 word seedphrase
+  for (int i = 0; i < seedPhraseStdString.length(); i++) {
+      if (i == 0 || seedPhraseStdString[i - 1] == ' ') { // Check for the start of a new word
+          options += String(wordNumber) + ". "; // Append the word number and a period
+          wordNumber++; // Increment the word number
+      }
+      if (seedPhraseStdString[i] == ' ') {
+          options += '\n'; // Add a newline character instead of space
+      } else {
+          options += seedPhraseStdString[i]; // Add the current character
+      }
+  }
+  const char *options_cStr = options.c_str();
+  lv_roller_set_options(ui_Roller2, options_cStr, LV_ROLLER_MODE_NORMAL);
    // lv_label_set_text(ui_Label28, labelStr.c_str());
    setSelectedSeedWordBip39Text(0);
-    }
+}
