@@ -73,10 +73,13 @@ void splitString(const std::string& str, std::string seedPhraseArray[24]) {
 void initiateKeyPair(const char* seedphrase) {
   std::string seedphraseStr(seedphrase);
 
-    // Check if the last character is a space
-if (!seedphraseStr.empty() && seedphraseStr.back() == ' ') {
+    // Check if the last character is a space for user input seed path
+
+    if( seedphraseStr.back() == ' '){
+         seedphraseStr.pop_back();
+    }
        std::string seedPhraseArray[24];
-        seedphraseStr.pop_back();
+     
 
         splitString(seedphraseStr, seedPhraseArray);
     
@@ -87,22 +90,15 @@ if (!seedphraseStr.empty() && seedphraseStr.back() == ' ') {
         mnemonicsString += seedPhraseArray[i];
     }
 
-    // Use the mnemonicsString for operations
     Serial.println(mnemonicsString.c_str());
-    HDPrivateKey hd(mnemonicsString.c_str(), "");
-    KeyManager::getInstance().setMnemonicsString(mnemonicsString.c_str());
+
+     HDPrivateKey hd(seedphraseStr.c_str(), "");
+    KeyManager::getInstance().setMnemonicsString(seedphraseStr.c_str());
     KeyManager::getInstance().setHDPrivateKey(&hd);
     
     // Additionally, set the mnemonic array in KeyManager
     KeyManager::getInstance().setMnemonicWords(seedPhraseArray);
         
-    } else {
-        // If the last character is not a space, proceed as before
-        Serial.println(seedphrase);
-        HDPrivateKey hd(seedphrase, "");
-        KeyManager::getInstance().setMnemonicsString(seedphrase);
-        KeyManager::getInstance().setHDPrivateKey(&hd);
-    }
 }
 
 
@@ -112,9 +108,9 @@ void generateSeed(const char* userEntropy) {
     getFinalRandomEntropy(final_entropy_state,256,userEntropy);
     String seedPhraseString =  generateMnemonic(24, final_entropy_state,256);
 
-    KeyManager::getInstance().setMnemonicsString(seedPhraseString.c_str());
-    displaySeedOnUI();
+
     initiateKeyPair(seedPhraseString.c_str());
+    displaySeedOnUI();
 }
 
 void getFinalRandomEntropy(uint8_t* outputArray, size_t size, const char* userEntropy) {
@@ -163,11 +159,7 @@ void displaySeedOnUI(){
 
 
 std::string seedPhraseStdString = KeyManager::getInstance().getMnemonicsString();
-    std::string seedPhraseArray[24];
-  splitString(seedPhraseStdString,seedPhraseArray);
 
-    KeyManager::getInstance().setValues(nullptr, nullptr,seedPhraseArray, &seedPhraseStdString,nullptr);
- 
     String options = "";
     int wordNumber = 1; // Initialize word number counter
 

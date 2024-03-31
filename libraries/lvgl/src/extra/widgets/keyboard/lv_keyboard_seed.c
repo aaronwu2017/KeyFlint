@@ -29,6 +29,10 @@ const char * fullEnteredText = lv_textarea_get_text(ta) ;
     myTrie->parent = NULL;
 
     if(strcmp(txt, "go") == 0) {
+        if(!seedWordsValidation(fullEnteredText)){
+          
+            return;
+        }
         lv_event_send(obj, LV_EVENT_READY, NULL);
         //  lv_event_send(obj, LV_EVENT_READY, ta);
         initiateKeyPair(fullEnteredText);
@@ -174,4 +178,23 @@ lv_obj_t * lv_ex_btnmatrix_seed(lv_obj_t * obj)
      return btnm1;
 }
 
+
+int seedWordsValidation(const char* seedWords) {
+    int spaceCount = 0; // Variable to hold the count of spaces
+    int length = strlen(seedWords); // Get the length of the seed words string
+
+    // Loop through each character in the string to count spaces
+    for(int i = 0; i < length; i++) {
+        if(seedWords[i] == ' ') {
+            spaceCount++;
+        }
+    }
+
+    // Check if the number of spaces is either 11 or 23
+    if(spaceCount == 12 || spaceCount == 24) {
+        return 1; // Valid seed words
+    } else {
+        return 0; // Invalid seed words
+    }
+}
 #endif
