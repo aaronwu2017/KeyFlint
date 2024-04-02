@@ -111,7 +111,7 @@ void getFinalRandomEntropy(uint8_t* outputArray, size_t size, const char* userEn
     esp32_random_collecting(esp32_entropy_state, SHA256_LEN);
 
     // Buffer to store the combined entropy
-    uint8_t combined_entropy[2 * SHA256_LEN];  // Adjust the size as needed
+    uint8_t combined_entropy[2 * SHA256_LEN]; 
 
     // Copy ESP32 entropy to combined_entropy
     memcpy(combined_entropy, esp32_entropy_state, SHA256_LEN);
