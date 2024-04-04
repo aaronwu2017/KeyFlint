@@ -2,7 +2,8 @@
  #include <esp_system.h>
 
 #include <bootloader_random.h>
-
+#include "esp_timer.h" // For esp_timer_get_time
+#include <string.h>
 #include "random.h"
 #include "bootloader_random.h"
 #include <esp_log.h>
