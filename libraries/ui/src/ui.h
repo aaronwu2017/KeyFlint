@@ -196,6 +196,7 @@ extern lv_obj_t *ui_Button2226;
 extern lv_obj_t *ui_Label116;
 void ui_event_ImgButton119( lv_event_t * e);
 extern lv_obj_t *ui_ImgButton119;
+extern lv_obj_t * XPub_qr;
 // SCREEN: ui_Screen119
 void ui_Screen119_screen_init(void);
 extern lv_obj_t *ui_Screen119;

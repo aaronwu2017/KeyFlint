@@ -207,7 +207,7 @@ lv_obj_t *ui_Screen118;
 lv_obj_t *ui_Label116;
 void ui_event_ImgButton119( lv_event_t * e);
 lv_obj_t *ui_ImgButton119;
-
+lv_obj_t * XPub_qr;
 
 // SCREEN: ui_Screen119
 void ui_Screen119_screen_init(void);

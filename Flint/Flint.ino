@@ -189,6 +189,8 @@ void setup() {
 }
 
 void loop() {
+    Serial.print("Free heap memory: ");
+  Serial.println(ESP.getFreeHeap());
   lv_timer_handler(); // let the GUI do its work
   delay(5);
 
