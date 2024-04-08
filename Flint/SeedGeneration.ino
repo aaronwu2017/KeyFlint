@@ -6,8 +6,7 @@ extern "C" {
 }
 #define SHA256_LEN 32
 #include "utility/trezor/bip39_english.h"
-static TrieNode *myTrie = NULL;
-static TrieNode *currentNode = NULL;
+
 
 // Function to get the currently selected seed word in the UI roller
 void getSelectedSeedWord(lv_event_t *e) {
@@ -27,23 +26,21 @@ void setSelectedSeedWordBip39Text(int wordIndex){
     const std::string& wordString = mySeedPhrase[wordIndex];
     const char* word = wordString.c_str();
 
-    // Traverse the trie to find the node corresponding to the selected word
-    currentNode = myTrie;
-    for (int i = 0; i < strlen(word); i++) {
-        int index = word[i] - 'a';
-        currentNode = currentNode->children[index];
+
+    int number = -1;
+    for(int i = 0; i <= 2047;i++){
+      if(String(wordlist[i]) == word) {
+        number = i;
+        break; // Exit the loop if the word is found.
+      }
     }
-
-    // Get the number associated with the node
-    int number = currentNode->bip39Number;
-
-    // Convert the number to a binary string
+    // Convert the number-1 to a binary string
     char binaryString[12]; // 11 for binary digits + 1 for null terminator
     itoa(number, binaryString, 2); // Convert to binary string
 
     // Create the final string to set on the label
     char labelString[64];
-    sprintf(labelString, "Number: %d\nBinary: %s", number, binaryString);
+    sprintf(labelString, "Number: %d\nBinary: %s", number+1, binaryString);
 
     // Set the text of the label to display the information
     lv_label_set_text(ui_Label13, labelString);
@@ -138,13 +135,8 @@ void getFinalRandomEntropy(uint8_t* outputArray, size_t size, const char* userEn
 }
 
 void displaySeedOnUI(){
- if (myTrie == NULL) {
-      myTrie = createNode(0);  
-      for (int i = 0; i < 2048; i++) {
-        insert(myTrie, wordlist[i],i);  // Insert words into the trie
-      }
-      currentNode = myTrie; 
-  }
+  
+
   std::string seedPhraseStdString = KeyManager::getInstance().getMnemonicsString();
   String options = "";
   int wordNumber = 1; // Initialize word number counter
@@ -166,3 +158,5 @@ void displaySeedOnUI(){
    // lv_label_set_text(ui_Label28, labelStr.c_str());
    setSelectedSeedWordBip39Text(0);
 }
+
+

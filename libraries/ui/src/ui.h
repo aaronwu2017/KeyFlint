@@ -24,6 +24,11 @@ extern "C" {
 
 #include "ui_helpers.h"
 #include "ui_events.h"
+
+#include "../../../Flint/Trie.h"
+extern TrieNode *myTrie;
+extern TrieNode *currentNode;
+
 // SCREEN: ui_Screen1
 void ui_Screen1_screen_init(void);
 extern lv_obj_t *ui_Screen1;

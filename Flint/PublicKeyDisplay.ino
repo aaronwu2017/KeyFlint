@@ -21,7 +21,7 @@ void displayPublicKey() {
     int partLength = xpubString.length() / 4;
     String formattedXpub = "";
     for (int i = 0; i < 4; i++) {
-        int start = i * partLength;
+        int start = i * partLength; 
         int end = (i < 3) ? (start + partLength) : xpubString.length(); // Ensure the last part includes the end of the string
         formattedXpub += xpubString.substring(start, end);
         if (i < 3) { // Don't add a newline at the end of the last part

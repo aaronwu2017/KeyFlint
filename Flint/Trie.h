@@ -10,9 +10,8 @@
 typedef struct TrieNode {
     struct TrieNode *children[ALPHABET_SIZE];
     struct TrieNode *parent;
-    int isEndOfWord;
-    int level; 
-    int bip39Number;
+  unsigned int isEndOfWord : 1;
+  unsigned int level : 4; // The maximum word length is 15 characters
 } TrieNode;
 
 TrieNode *createNode(int level);

@@ -5,6 +5,7 @@ TrieNode *createNode(int level) {
     TrieNode *newNode = malloc(sizeof(TrieNode));
     if (newNode) {
         int i;
+        newNode->parent = NULL; 
         newNode->isEndOfWord = 0;
         newNode->level = level; 
         for (i = 0; i < 26; i++) {
@@ -29,7 +30,6 @@ void insert(TrieNode *root, const char *key, int number) {
         }
         pCrawl = pCrawl->children[index];
     }
-    pCrawl->bip39Number = number;
     pCrawl->isEndOfWord = 1;
 }
 
@@ -42,4 +42,3 @@ void deleteTrie(TrieNode *root) {
     }
     free(root);
 }
-

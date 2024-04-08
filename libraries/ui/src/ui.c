@@ -2,12 +2,13 @@
 // SquareLine Studio version: SquareLine Studio 1.3.2
 // LVGL version: 8.3.6
 // Project name: SquareLine_Project
-
+#include <esp_log.h>
 #include "ui.h"
 #include "ui_helpers.h"
-
+ #include "../../../Flint/Trie.h"
 ///////////////////// VARIABLES ////////////////////
-
+TrieNode *myTrie;
+TrieNode *currentNode;
 
 // SCREEN: ui_Screen1
 void ui_Screen1_screen_init(void);
@@ -260,7 +261,9 @@ if ( event_code == LV_EVENT_SCREEN_LOAD_START) {
 void ui_event_Keyboard1( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_READY) {
+    // lv_obj_del(&ui_Screen1);
       _ui_screen_change( &ui_Screen119, LV_SCR_LOAD_ANIM_MOVE_LEFT, 500, 0, &ui_Screen119_screen_init);
+      deleteTrie(myTrie);
 }
 }
 void ui_event_TextArea1( lv_event_t * e) {

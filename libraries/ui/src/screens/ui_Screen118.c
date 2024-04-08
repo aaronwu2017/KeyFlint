@@ -45,7 +45,7 @@ lv_obj_set_x( ui_ImgButton119, lv_pct(-45) );
 lv_obj_set_y( ui_ImgButton119, lv_pct(-40) );
 lv_obj_set_align( ui_ImgButton119, LV_ALIGN_CENTER );
 
-XPub_qr = lv_qrcode_create(ui_Screen118, 10, lv_color_hex3(0x000),lv_color_hex3(0xeef));
+XPub_qr = lv_qrcode_create(ui_Screen118, 109, lv_color_hex3(0x000),lv_color_hex3(0xeef));
 const char * data = "Hello world";
  lv_qrcode_update(qr, data, strlen(data));
 lv_obj_add_event_cb(ui_ImgButton119, ui_event_ImgButton119, LV_EVENT_ALL, NULL);

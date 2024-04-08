@@ -189,10 +189,10 @@ void setup() {
 }
 
 void loop() {
-    Serial.print("Free heap memory: ");
-  Serial.println(ESP.getFreeHeap());
-    UBaseType_t uxHighWaterMark;
-    uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
+  // Serial.print("Free heap memory: ");
+  // Serial.println(ESP.getFreeHeap());
+  // UBaseType_t uxHighWaterMark;
+  // uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
 
   // Serial.print("Minimum free stack for loop task: ");
   // Serial.println(uxHighWaterMark * sizeof(portSTACK_TYPE)); // Convert to bytes
