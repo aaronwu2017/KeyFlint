@@ -16,21 +16,21 @@ void displayPublicKey() {
 
     // Assuming xpub has a method to get its string representation
     Serial.println(xpubString);
-
+ lv_qrcode_update(XPub_qr , xpubString.c_str(), strlen(xpubString.c_str()));
     // Split the xpubString into four parts and add newline characters
-    int partLength = xpubString.length() / 4;
+    int partLength = xpubString.length() / 6;
     String formattedXpub = "";
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 6; i++) {
         int start = i * partLength; 
-        int end = (i < 3) ? (start + partLength) : xpubString.length(); // Ensure the last part includes the end of the string
+        int end = (i < 5) ? (start + partLength) : xpubString.length(); // Ensure the last part includes the end of the string
         formattedXpub += xpubString.substring(start, end);
-        if (i < 3) { // Don't add a newline at the end of the last part
+        if (i < 5) { // Don't add a newline at the end of the last part
             formattedXpub += "\n";
         }
     }
 
     // Prepare the output string
-    String output = "\n\nNative SegWit Public Key (xpub):\n" + formattedXpub;
+    String output = "\n\nNative SegWit Public Key \n(xpub):\n" + formattedXpub;
 
     // Use the output String to set the label text in the UI
     lv_label_set_text_static(ui_Label116, output.c_str());
