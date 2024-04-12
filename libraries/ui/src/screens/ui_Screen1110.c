@@ -12,6 +12,21 @@ lv_obj_clear_flag( ui_Screen1110, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_Screen1110, lv_color_hex(0xF1F1F1), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Screen1110, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
+
+ui_Button1121 = lv_btn_create(ui_Screen1110);
+lv_obj_set_width( ui_Button1121, 50);
+lv_obj_set_height( ui_Button1121, 47);
+lv_obj_set_x( ui_Button1121, -213 );
+lv_obj_set_y( ui_Button1121, -133 );
+lv_obj_set_align( ui_Button1121, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_Button1121, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
+lv_obj_clear_flag( ui_Button1121, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_bg_color(ui_Button1121, lv_color_hex(0xF1F1F1), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_Button1121, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_shadow_color(ui_Button1121, lv_color_hex(0xF1F1F1), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_shadow_opa(ui_Button1121, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+
+
 ui_ImgButton115 = lv_imgbtn_create(ui_Screen1110);
 lv_imgbtn_set_src(ui_ImgButton115, LV_IMGBTN_STATE_RELEASED, NULL, &ui_img_black_arrow_resized_25x20_png, NULL);
 lv_obj_set_height( ui_ImgButton115, 33);
@@ -26,6 +41,10 @@ lv_obj_set_height( ui_Keyboard113, 214);
 lv_obj_set_x( ui_Keyboard113, -4 );
 lv_obj_set_y( ui_Keyboard113, 48 );
 lv_obj_set_align( ui_Keyboard113, LV_ALIGN_CENTER );
+//disable LV_SYMBOL_NEW_LINE
+lv_btnmatrix_set_btn_ctrl(ui_Keyboard113, 22, LV_BTNMATRIX_CTRL_HIDDEN);
+//disable LV_SYMBOL_OK
+lv_btnmatrix_set_btn_ctrl(ui_Keyboard113, 39, LV_BTNMATRIX_CTRL_HIDDEN);
 
 ui_TextArea113 = lv_textarea_create(ui_Screen1110);
 lv_obj_set_width( ui_TextArea113, 451);
@@ -38,8 +57,8 @@ lv_textarea_set_placeholder_text(ui_TextArea113,"max 100 characters");
 
 
 ui_Switch111 = lv_switch_create(ui_Screen1110);
-lv_obj_set_width( ui_Switch111, 50);
-lv_obj_set_height( ui_Switch111, 25);
+lv_obj_set_width( ui_Switch111, 80);
+lv_obj_set_height( ui_Switch111, 40);
 lv_obj_set_x( ui_Switch111, 198 );
 lv_obj_set_y( ui_Switch111, -127 );
 lv_obj_set_align( ui_Switch111, LV_ALIGN_CENTER );
@@ -57,5 +76,5 @@ lv_obj_set_style_text_font(ui_Label117, &lv_font_montserrat_16, LV_PART_MAIN| LV
 lv_obj_add_event_cb(ui_ImgButton115, ui_event_ImgButton115, LV_EVENT_ALL, NULL);
 lv_keyboard_set_textarea(ui_Keyboard113,ui_TextArea113);
 lv_obj_add_event_cb(ui_Switch111, ui_event_Switch111, LV_EVENT_ALL, NULL);
-
+lv_obj_add_event_cb(ui_Button1121, ui_event_Button1121, LV_EVENT_ALL, NULL);
 }

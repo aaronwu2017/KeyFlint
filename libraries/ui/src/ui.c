@@ -160,7 +160,8 @@ lv_obj_t *ui_TextArea113;
 void ui_event_Switch111( lv_event_t * e);
 lv_obj_t *ui_Switch111;
 lv_obj_t *ui_Label117;
-
+void ui_event_Button1121( lv_event_t * e);
+lv_obj_t *ui_Button1121;
 
 // SCREEN: ui_Screen1112
 void ui_Screen1112_screen_init(void);
@@ -420,7 +421,13 @@ if ( event_code == LV_EVENT_CLICKED) {
 void ui_event_Switch111( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-    //   enablePassphrase( e );
+    passphraseSwitcherHandler( e );
+}
+}
+void ui_event_Button1121( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      _ui_screen_change( &ui_Screen115, LV_SCR_LOAD_ANIM_MOVE_RIGHT, 500, 0, &ui_Screen115_screen_init);
 }
 }
 void ui_event_Button2229( lv_event_t * e) {

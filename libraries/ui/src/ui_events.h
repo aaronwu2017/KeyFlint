@@ -20,6 +20,7 @@ void stopPSBTExporting();
 void displayPrivateKey();
 void displayAddresses();
 void displayPublicKey();
+void passphraseSwitcherHandler( );
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

@@ -165,6 +165,8 @@ extern lv_obj_t *ui_TextArea113;
 void ui_event_Switch111( lv_event_t * e);
 extern lv_obj_t *ui_Switch111;
 extern lv_obj_t *ui_Label117;
+void ui_event_Button1121( lv_event_t * e);
+extern lv_obj_t *ui_Button1121;
 // SCREEN: ui_Screen1112
 void ui_Screen1112_screen_init(void);
 extern lv_obj_t *ui_Screen1112;
