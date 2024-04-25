@@ -21,7 +21,7 @@
     bootloader_random_enable();
     esp_fill_random(outputArray, size); 
     bootloader_random_disable();
-    ESP_LOGE(LOG_TAG, "Random data collection complete.");
+   
 
     // Enable to log immediately after collecting random data.
 
@@ -61,4 +61,15 @@
     mbedtls_sha256_finish_ret(&ctx, hash);
     mbedtls_sha256_free(&ctx);
     memcpy(outputArray, hash, 32);
+}
+
+uint32_t random32(void) {
+
+  // Enable the RF-based entropy source for random number generation
+  bootloader_random_enable();
+  uint32_t random_number = esp_random();;
+  bootloader_random_disable();
+  //  esp_log_level_set("esp32_random", ESP_LOG_ERROR);
+// ESP_LOGE(LOG_TAG, "Random number: %u", random_number);
+  return random_number;
 }
