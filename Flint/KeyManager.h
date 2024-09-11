@@ -2,6 +2,7 @@
 #ifndef KEY_MANAGER_H
 #define KEY_MANAGER_H
 #include "Bitcoin.h"
+#include <string>
 #include <Arduino.h>
 // Include other necessary headers...
 

@@ -48,17 +48,17 @@
     // Add modest entropy via current time hashed with the collected random data
     mbedtls_sha256_context ctx;
     mbedtls_sha256_init(&ctx);
-    mbedtls_sha256_starts_ret(&ctx, 0); // Use 0 for SHA-256, 1 for SHA-224
+    mbedtls_sha256_starts(&ctx, 0); // Use 0 for SHA-256, 1 for SHA-224
 
     // Convert current time to a string and hash it together with the random data
     char timeString[20];
     snprintf(timeString, 20, "%llu", (long long unsigned)esp_timer_get_time());
     //ESP_LOGE(LOG_TAG, "Current time: %s", timeString);
-    mbedtls_sha256_update_ret(&ctx, (const unsigned char *)timeString, strlen(timeString));
-    mbedtls_sha256_update_ret(&ctx, outputArray, size);
+    mbedtls_sha256_update(&ctx, (const unsigned char *)timeString, strlen(timeString));
+    mbedtls_sha256_update(&ctx, outputArray, size);
 
     unsigned char hash[32]; // SHA-256 produces a 32 byte hash
-    mbedtls_sha256_finish_ret(&ctx, hash);
+    mbedtls_sha256_finish(&ctx, hash);
     mbedtls_sha256_free(&ctx);
     memcpy(outputArray, hash, 32);
 }
