@@ -39,7 +39,7 @@ lv_obj_set_height( ui_TextArea1, 70);
 lv_obj_set_x( ui_TextArea1, 3 );
 lv_obj_set_y( ui_TextArea1, -77 );
 lv_obj_set_align( ui_TextArea1, LV_ALIGN_CENTER );
-lv_textarea_set_placeholder_text(ui_TextArea1,"24-word Seed");
+lv_textarea_set_placeholder_text(ui_TextArea1,"24-word or 12-word seed");
 
 
 
